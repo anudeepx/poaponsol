@@ -1,65 +1,38 @@
-import Image from "next/image";
+import { FeaturesSectionDemo } from "@/components/Features";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="relative min-h-screen overflow-hidden bg-[#0B0B0B] text-white">
+      <Navbar />
+
+      <section className="flex flex-col items-center justify-center mt-20 px-6 md:px-0">
+        <Hero />
+      </section>
+      <section
+        id="features"
+        className="flex flex-col lg:flex-row mt-20 mx-auto w-full max-w-7xl px-6"
+      >
+        <div className="w-full lg:w-1/2 flex items-center justify-center">
+          <div className="max-w-md">
+            <h2 className="text-3xl md:text-5xl font-semibold leading-tight mb-6">
+              Why <span className="text-emerald-400">POAPonSOL</span>?
+            </h2>
+            <p className="text-neutral-400 text-base md:text-lg">
+              POAPonSOL is a decentralized proof-of-attendance protocol built on
+              Solana — enabling event organizers to create, distribute, and
+              verify digital attendance badges as NFTs.
+            </p>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="w-full lg:w-1/2 flex items-center justify-center mt-10 lg:mt-0">
+          <FeaturesSectionDemo />
         </div>
-      </main>
-    </div>
+      </section>
+
+      <Footer />
+    </main>
   );
 }

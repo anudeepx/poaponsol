@@ -6,11 +6,5 @@ declare_id!("DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r");
 pub mod poaponsol {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        msg!("Greetings from: {:?}", ctx.program_id);
-        Ok(())
-    }
+    
 }
-
-#[derive(Accounts)]
-pub struct Initialize {}
