@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@metaplex-foundation/mpl-core": "^1.7.0",
     "@radix-ui/themes": "^3.2.1",
     "@solana/wallet-adapter-react": "^0.15.39",
     "@solana/wallet-adapter-react-ui": "^0.9.39",
