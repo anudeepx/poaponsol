@@ -1,0 +1,30 @@
+use anchor_lang::prelude::*;
+use crate::{
+    state::event::Event,
+    errors::PoapError,
+};
+
+#[derive(Accounts)]
+pub struct CloseEvent<'info> {
+    #[account(mut)]
+    pub organizer: Signer<'info>,
+
+    #[account(
+        mut,
+        seeds = [b"event", event.organizer.as_ref(), event.name.as_bytes()],
+        bump,
+        has_one = organizer @ PoapError::NotAuthorized,
+    )]
+    pub event: Account<'info, Event>,
+}
+
+pub fn handler(ctx: Context<CloseEvent>) -> Result<()> {
+    let event = &mut ctx.accounts.event;
+
+    require!(event.is_active, PoapError::EventAlreadyClosed);
+
+    event.is_active = false;
+    msg!("Event '{}' closed successfully by organizer.", event.name);
+
+    Ok(())
+}
