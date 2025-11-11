@@ -40,17 +40,18 @@ pub struct CreateEvent<'info> {
 }
 
 impl<'info> CreateEvent<'info> {
-    pub fn handler(ctx: Context<Self>, args: CreateEventArgs, bumps: &CreateEventBumps) -> Result<()> {
+    pub fn handler(ctx: Context<Self>, args: CreateEventArgs) -> Result<()> {
         let event = &mut ctx.accounts.event;
         let organizer = &ctx.accounts.organizer;
         let collection = &ctx.accounts.collection;
         let core_program = &ctx.accounts.core_program;
-
+        
+        let bump = ctx.bumps.event;
         let signer_seeds: &[&[&[u8]]] = &[&[
             EVENT_SEED,
             organizer.key.as_ref(),
             args.name.as_bytes(),
-            &[bumps.event],
+            &[bump],
         ]];
 
         CreateCollectionV2CpiBuilder::new(&core_program.to_account_info())

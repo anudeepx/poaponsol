@@ -6,4 +6,3 @@ pub use mint_badge::*;
 
 pub mod close_event;
 pub use close_event::*;
-

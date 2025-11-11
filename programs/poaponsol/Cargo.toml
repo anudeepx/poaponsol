@@ -19,6 +19,11 @@ anchor-debug = []
 custom-heap = []
 custom-panic = []
 
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+
 
 [dependencies]
 anchor-lang = "0.32.1"
