@@ -1,7 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Connection, PublicKey } from "@solana/web3.js";
-import idl from "../../target/idl/poaponsol.json";
-import { Poaponsol } from "../../target/types/poaponsol";
+import idl from "@/idl/poaponsol.json";
+import { Poaponsol } from "@/types/poaponsol";
 
 const PROGRAM_ID = new PublicKey(idl.address);
 
