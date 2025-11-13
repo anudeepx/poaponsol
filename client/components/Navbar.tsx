@@ -39,7 +39,7 @@ const Navbar = () => {
             <div className="hidden md:block">
               <WalletWrapper />
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden h-10 md:w-auto md:h-auto">
               <WalletWrapper />
             </div>
           </div>

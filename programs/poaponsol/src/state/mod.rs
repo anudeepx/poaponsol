@@ -3,3 +3,6 @@ pub use event::*;
 
 pub mod collection_authority;
 pub use collection_authority::*;
+
+pub mod organizer_profile;
+pub use organizer_profile::*;

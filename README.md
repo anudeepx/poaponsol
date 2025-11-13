@@ -5,13 +5,14 @@
 ## deployment logs
 
 ```bash 
-Deploying cluster: http://127.0.0.1:8899
+avula@AsusVivobook16x:~/poaponsol$ anchor deploy --provider.cluster devnet
+Deploying cluster: https://api.devnet.solana.com
 Upgrade authority: /home/avula/.config/solana/id.json
 Deploying program "poaponsol"...
 Program path: /home/avula/poaponsol/target/deploy/poaponsol.so...
 Program Id: DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r
 
-Signature: 3brsXTxU2ySumfSTTzvuTakh7pA4s86GH5fRyBeA6mr2VATqxDatzAy5xLZcXTfb7sA6AJjPH7X5gj4wKMomJbEd
+Signature: 5jEEh6pDKJHwDiqSdPw7GZWXTvHaXt1YBes85f2o7oQbZ9KhHLBMraGf26V9AK6tS2gNW15K1gCbQdddnx1c5TnV
 
 Waiting for program DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r to be confirmed...
 Program confirmed on-chain
@@ -21,4 +22,13 @@ Step 600/1069
 Idl account created: HxfApq92znBg7cXTWYL47B6sKg54wyddpQtY2yMUNUFW
 Deploy success
 
+avula@AsusVivobook16x:~/poaponsol$ solana program show DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r
+
+Program Id: DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r
+Owner: BPFLoaderUpgradeab1e11111111111111111111111
+ProgramData Address: DMufzBtpEzSBT78VsuejpBDVwVmjYWbCf11jaaPMeiKE
+Authority: 2SZyg3ZgvmpE2FkqKnhtyz5xj4twnVcv8vaDyrVJszuv
+Last Deployed In Slot: 421014641
+Data Length: 318600 (0x4dc88) bytes
+Balance: 2.21866008 SOL
 ```

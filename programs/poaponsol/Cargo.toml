@@ -26,7 +26,7 @@ codegen-units = 1
 
 
 [dependencies]
-anchor-lang = "0.32.1"
+anchor-lang ={version = "0.32.1", features = ["init-if-needed"]}
 mpl-core = { version = "0.11.1", features = ["anchor"] }
 
 [lints.rust]

@@ -1,10 +1,7 @@
 use anchor_lang::prelude::*;
 use mpl_core::{instructions::CreateCollectionV2CpiBuilder, ID as CORE_PROGRAM_ID};
 
-use crate::{
-    constants::EVENT_SEED,
-    state::event::Event
-};
+use crate::{constants::{EVENT_SEED, PROFILE_SEED}, state::event::Event, state::OrganizerProfile};
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct CreateEventArgs {
@@ -16,16 +13,29 @@ pub struct CreateEventArgs {
 }
 
 #[derive(Accounts)]
-#[instruction(args: CreateEventArgs)]
 pub struct CreateEvent<'info> {
     #[account(mut)]
     pub organizer: Signer<'info>,
 
     #[account(
+        init_if_needed,
+        payer = organizer,
+        space = OrganizerProfile::LEN,
+        seeds = [PROFILE_SEED, organizer.key().as_ref()],
+        bump,
+        constraint = profile.organizer == organizer.key() || profile.organizer == Pubkey::default(),
+    )]
+    pub profile: Account<'info, OrganizerProfile>,
+
+    #[account(
         init,
         payer = organizer,
         space = Event::LEN,
-        seeds = [EVENT_SEED, organizer.key().as_ref(), args.name.as_bytes()],
+        seeds = [
+            EVENT_SEED,
+            organizer.key().as_ref(),
+            &profile.event_count.to_le_bytes(),
+        ],
         bump
     )]
     pub event: Account<'info, Event>,
@@ -33,9 +43,10 @@ pub struct CreateEvent<'info> {
     #[account(mut)]
     pub collection: Signer<'info>,
 
-    /// CHECK: This account is validated by Metaplex Core CPI
+    /// CHECK: Validated by Metaplex Core CPI
     #[account(address = CORE_PROGRAM_ID)]
     pub core_program: UncheckedAccount<'info>,
+
     pub system_program: Program<'info, System>,
 }
 
@@ -45,12 +56,20 @@ impl<'info> CreateEvent<'info> {
         let organizer = &ctx.accounts.organizer;
         let collection = &ctx.accounts.collection;
         let core_program = &ctx.accounts.core_program;
-        
+        let profile = &mut ctx.accounts.profile;
+
+        if profile.organizer == Pubkey::default() {
+            profile.organizer = organizer.key();
+        }
+
+        let event_index = profile.event_count;
+        profile.event_count += 1;
+
         let bump = ctx.bumps.event;
         let signer_seeds: &[&[&[u8]]] = &[&[
             EVENT_SEED,
             organizer.key.as_ref(),
-            args.name.as_bytes(),
+            &event_index.to_le_bytes(),
             &[bump],
         ]];
 

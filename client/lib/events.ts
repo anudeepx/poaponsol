@@ -1,21 +1,24 @@
 import * as anchor from "@coral-xyz/anchor";
 import { SystemProgram, Keypair } from "@solana/web3.js";
 import { getAnchorClient } from "./anchorClient";
-import { getEventPda } from "./pdas";
+import { getEventPda, getProfilePda } from "./pdas";
 import { PublicKey } from "@solana/web3.js";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";
 
 export const createEvent = async (wallet: anchor.Wallet, args: any) => {
-    const { program, connection } = getAnchorClient(wallet);
+    const { program } = getAnchorClient(wallet);
     const eventName = args.name;
+    const eventIndex = await getProfileEventCount(wallet, {});
+    const [eventPda] = getEventPda(wallet.publicKey, eventIndex as number, program.programId);
+    const [profilePda] = getProfilePda(wallet.publicKey, program.programId);
 
-    const [eventPda] = getEventPda(wallet.publicKey, eventName, program.programId);
     const collection = Keypair.generate();
 
     const txSig = await program.methods
         .createEvent(args)
         .accounts({
             organizer: wallet.publicKey,
+            profile: profilePda,
             event: eventPda,
             collection: collection.publicKey,
             coreProgram: MPL_CORE_PROGRAM_ID,
@@ -47,3 +50,17 @@ export const closeEvent = async (wallet: anchor.Wallet, eventPda: PublicKey) => 
     console.log("Tx:", txSig);
 };
 
+export const getProfileEventCount = async (wallet: anchor.Wallet, args: any) => {
+    const { program } = getAnchorClient(wallet);
+    const [profilePda] = getProfilePda(wallet.publicKey, program.programId);
+
+    let profile;
+    try {
+        profile = await program.account.organizerProfile.fetch(profilePda);
+    } catch {
+        profile = { eventCount: 0 };
+    }
+
+    const eventIndex = profile.eventCount;
+    return eventIndex;
+}

@@ -1,12 +1,28 @@
 import { PublicKey } from "@solana/web3.js";
-import { utils } from "@coral-xyz/anchor";
+import * as anchor from "@coral-xyz/anchor";
 
-export const getEventPda = (organizer: PublicKey, name: string, programId: PublicKey) => {
+export const getEventPda = (
+    organizer: PublicKey,
+    eventIndex: number,
+    programId: PublicKey
+) => {
     return PublicKey.findProgramAddressSync(
-        [Buffer.from("event"), organizer.toBuffer(), Buffer.from(name)],
+        [
+            Buffer.from("event"),                       
+            organizer.toBuffer(),                     
+            Buffer.from(new anchor.BN(eventIndex).toArrayLike(Buffer, "le", 8)), 
+        ],
         programId
     );
 };
+
+
+export const getProfilePda = (organizer: PublicKey, programId: PublicKey) => {
+    return PublicKey.findProgramAddressSync(
+        [Buffer.from("profile"), organizer.toBuffer()],
+        programId
+    );
+}
 
 export const getCollectionAuthorityPda = (collection: PublicKey, programId: PublicKey) => {
     return PublicKey.findProgramAddressSync(

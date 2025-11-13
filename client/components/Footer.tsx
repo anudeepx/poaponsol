@@ -1,5 +1,8 @@
-import React from "react";
+"use client";
+
 import { Button } from "./ui/button";
+import React from "react";
+import { useState } from "react";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
@@ -7,11 +10,26 @@ import {
 } from "@tabler/icons-react";
 import FooterGradient from "./ui/footer-gradient";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { toast } from "sonner";
+import Form from "./Form";
 
 export default function Footer() {
+  const [loading, setLoading] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
+  const { connected, wallet } = useWallet();
+  const handleFormOpen = async () => {
+    if (!connected || !wallet?.adapter) return toast.error("Connect wallet first!");
+    setFormOpen(true);
+  };
   return (
     <>
       <footer className="h-[30rem] md:h-[40rem] relative py-10 mt-20">
+        <div className="abosolute z-99">
+          <Form open={formOpen} onClose={() => setFormOpen(false)} />
+        </div>
         <div className="bg-black z-[-1] opacity-95 absolute inset-0 bg-dot-white"></div>
         <FooterGradient />
         <div className="flex z-[20] flex-col items-center justify-between h-full">
@@ -25,18 +43,33 @@ export default function Footer() {
                 </span>
               </span>
             </h1>
-            <p className="text-muted-foreground mt-4 text-center max-w-2xl">
+            <p className="text-muted-foreground mt-4 text-center max-w-2xl p-2 md:p-0">
               Celebrate every moment on-chain — create, distribute, and verify attendance
               badges as NFTs. Fast, verifiable, and decentralized with Solana’s high-speed
               infrastructure.
             </p>
-            <div className="mt-8">
-              <Link href="/token" className="inline-block">
-                <Button className="bg-emerald-400 text-black hover:bg-emerald-400/90 hover:cursor-pointer">
-                  Try Now
-                </Button>
-              </Link>
-            </div>
+            <motion.button
+            className="flex items-center gap-2 mt-10 bg-emerald-400 border-2 hover:bg-white hover:text-black border-emerald-400 rounded-full px-5 py-3 text-lg font-subtitle font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={handleFormOpen}
+            disabled={loading}
+          >
+            {/* <span>Create Event</span> */}
+            {loading ? "Processing..." : "Create Event"}
+            <motion.div
+              initial={{ x: 0 }}
+              animate={{ x: [0, 5, 0] }}
+              transition={{
+                repeat: Infinity,
+                repeatDelay: 2.5,
+                duration: 1,
+              }}
+              className="bg-white text-black bg-opacity-30 rounded-full p-0.5"
+            >
+              <ArrowUpRight size={18} />
+            </motion.div>
+          </motion.button>
           </div>
 
           <div className="flex border-border/40 pt-8 w-full">

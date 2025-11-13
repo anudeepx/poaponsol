@@ -22,7 +22,6 @@ pub mod poaponsol {
     ) -> Result<()> {
         create_event::CreateEvent::handler(ctx, args)
     }
-
     pub fn mint_badge(ctx: Context<MintBadge>) -> Result<()> {
         MintBadge::handler(ctx)
     }
