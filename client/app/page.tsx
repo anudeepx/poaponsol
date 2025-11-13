@@ -22,7 +22,7 @@ export default function Home() {
             </h2>
             <p className="text-neutral-400 text-base md:text-lg">
               POAPonSOL is a decentralized proof-of-attendance protocol built on
-              Solana — enabling event organizers to create, distribute, and
+              Solana enabling event organizers to create, distribute, and
               verify digital attendance badges as NFTs.
             </p>
           </div>

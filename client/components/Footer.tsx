@@ -44,7 +44,7 @@ export default function Footer() {
               </span>
             </h1>
             <p className="text-muted-foreground mt-4 text-center max-w-2xl p-2 md:p-0">
-              Celebrate every moment on-chain — create, distribute, and verify attendance
+              Celebrate every moment on-chain create, distribute, and verify attendance
               badges as NFTs. Fast, verifiable, and decentralized with Solana’s high-speed
               infrastructure.
             </p>

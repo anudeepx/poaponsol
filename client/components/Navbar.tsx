@@ -24,16 +24,16 @@ const Navbar = () => {
                 Features
               </Link>
               <Link
-                href="#about"
+                href="/events"
                 className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
               >
-                About
+               My Events
               </Link>
               <Link
-                href="#status"
+                href="/badges"
                 className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
               >
-                Status
+               My Badges
               </Link>
             </nav>
             <div className="hidden md:block">

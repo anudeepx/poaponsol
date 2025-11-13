@@ -57,7 +57,7 @@ const Hero = () => {
         className="max-w-3xl relative mx-auto flex flex-col items-center justify-center text-center"
         {...fadeInUp}
       >
-        <h1 className="font-headline text-5xl md:text-6xl leading-tight font-semibold max-w-xl text-balance">
+        <h1 className="font-headline text-5xl md:text-5xl leading-tight font-semibold max-w-xl text-balance">
           Create, claim, and verify{" "}
           <span className="relative inline-block bg-gradient-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
             attendance badges
@@ -65,8 +65,8 @@ const Hero = () => {
           effortlessly
         </h1>
 
-        <p className="mt-4 text-base md:text-xl font-subtitle font-light text-neutral-400 max-w-2xl">
-          Celebrate every moment on-chain — fast, verifiable, and decentralized
+        <p className="mt-4 text-base md:text-xl font-subtitle font-light text-neutral-400 max-w-xl">
+          Celebrate every moment on-chain fast, verifiable, and decentralized
           with Solana.
         </p>
 
