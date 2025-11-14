@@ -1,7 +1,7 @@
 import * as anchor from "@coral-xyz/anchor";
 import { SystemProgram, Keypair } from "@solana/web3.js";
 import { getAnchorClient } from "./anchorClient";
-import { getEventPda, getProfilePda } from "./pdas";
+import { getCollectionAuthorityPda, getEventPda, getProfilePda } from "./pdas";
 import { PublicKey } from "@solana/web3.js";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";
 
@@ -9,10 +9,14 @@ export const createEvent = async (wallet: anchor.Wallet, args: any) => {
     const { program } = getAnchorClient(wallet);
     const eventName = args.name;
     const eventIndex = await getProfileEventCount(wallet, {});
+    const collection = Keypair.generate();
+
     const [eventPda] = getEventPda(wallet.publicKey, eventIndex as number, program.programId);
     const [profilePda] = getProfilePda(wallet.publicKey, program.programId);
-
-    const collection = Keypair.generate();
+    const [collectionAuthorityPda] = getCollectionAuthorityPda(
+        collection.publicKey,
+        program.programId
+    );
 
     const txSig = await program.methods
         .createEvent(args)
@@ -21,6 +25,7 @@ export const createEvent = async (wallet: anchor.Wallet, args: any) => {
             profile: profilePda,
             event: eventPda,
             collection: collection.publicKey,
+            collectionAuthority: collectionAuthorityPda,
             coreProgram: MPL_CORE_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
         } as any)

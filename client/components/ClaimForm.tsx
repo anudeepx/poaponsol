@@ -32,6 +32,7 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
     eventPda: "",
     collectionMint: "",
   });
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
@@ -52,13 +53,14 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
 
     setLoading(true);
     try {
-      const eventPda = new anchor.web3.PublicKey(formData.eventPda.trim());
-      const collectionMint = new anchor.web3.PublicKey(formData.collectionMint.trim());
-      const badgeMint = await mintBadge(wallet.adapter as any, eventPda, collectionMint);
+      const eventPubkey = new anchor.web3.PublicKey(formData.eventPda.trim());
+      const collectionPubkey = new anchor.web3.PublicKey(formData.collectionMint.trim());
+      const badgeMint = await mintBadge(wallet.adapter as any, eventPubkey, collectionPubkey);
       toast.success(`Badge minted successfully: ${badgeMint.toBase58()}`);
       onClose();
     } catch (err: any) {
       console.error(err);
+      setFormError(err.message || "Failed to claim badge");
       toast.error(err.message || "Failed to claim badge");
     } finally {
       setLoading(false);
@@ -75,7 +77,9 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
           exit="exit"
         >
           <div className="absolute inset-0" onClick={onClose} />
-
+          {formError && (<div className="absolute top-6 bg-red-600 text-white px-4 py-2 rounded-md shadow-md">
+            {formError}
+          </div>)}
           <motion.div
             // variants={modal}
             initial="hidden"

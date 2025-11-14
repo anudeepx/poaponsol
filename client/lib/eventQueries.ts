@@ -1,9 +1,11 @@
-import { PublicKey } from "@solana/web3.js";
+import { type PublicKey } from '@solana/web3.js';
 import { getAnchorClient } from "./anchorClient";
+import * as anchor from "@coral-xyz/anchor";
+import { Wallet } from "@solana/wallet-adapter-react";
 
 // @fetch events by organizer
-export const fetchEventsByOrganizer = async (wallet: any, organizer: PublicKey) => {
-    const { program } = getAnchorClient(wallet);
+export const fetchEventsByOrganizer = async (wallet: Wallet, organizer: PublicKey) => {
+    const { program } = getAnchorClient(wallet as unknown as anchor.Wallet);
 
     const allEvents = await program.account.event.all();
 
@@ -13,16 +15,16 @@ export const fetchEventsByOrganizer = async (wallet: any, organizer: PublicKey) 
 };
 
 // @fetch event by pda
-export const fetchEventByPda = async (wallet: any, eventPda: PublicKey) => {
-    const { program } = getAnchorClient(wallet);
+export const fetchEventByPda = async (wallet: Wallet, eventPda: PublicKey) => {
+    const { program } = getAnchorClient(wallet as unknown as anchor.Wallet);
 
     const account = await program.account.event.fetch(eventPda);
     return { pubkey: eventPda, data: account };
 };
 
 // @fetch events by date range
-export const fetchEventsByDate = async (wallet: any, start: number, end: number) => {
-    const { program } = getAnchorClient(wallet);
+export const fetchEventsByDate = async (wallet: Wallet, start: number, end: number) => {
+    const { program } = getAnchorClient(wallet as unknown as anchor.Wallet);
 
     const allEvents = await program.account.event.all();
 
@@ -36,8 +38,8 @@ export const fetchEventsByDate = async (wallet: any, start: number, end: number)
 };
 
 // @fetch active events
-export const fetchActiveEvents = async (wallet: any) => {
-    const { program } = getAnchorClient(wallet);
+export const fetchActiveEvents = async (wallet: Wallet) => {
+    const { program } = getAnchorClient(wallet as unknown as anchor.Wallet);
 
     const allEvents = await program.account.event.all();
 
@@ -53,8 +55,8 @@ export const fetchActiveEvents = async (wallet: any) => {
 };
 
 // @fetch events by name
-export const fetchEventsByName = async (wallet: any, name: string) => {
-    const { program } = getAnchorClient(wallet);
+export const fetchEventsByName = async (wallet: Wallet, name: string) => {
+    const { program } = getAnchorClient(wallet as unknown as anchor.Wallet);
 
     const allEvents = await program.account.event.all();
 

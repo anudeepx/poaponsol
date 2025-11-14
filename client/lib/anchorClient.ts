@@ -3,7 +3,7 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import idl from "@/idl/poaponsol.json";
 import { Poaponsol } from "@/types/poaponsol";
 
-const PROGRAM_ID = new PublicKey(idl.address);
+// const PROGRAM_ID = new PublicKey(idl.address);
 
 export const getAnchorClient = (wallet: anchor.Wallet) => {
     const connection = new Connection(anchor.web3.clusterApiUrl("devnet"), "confirmed");

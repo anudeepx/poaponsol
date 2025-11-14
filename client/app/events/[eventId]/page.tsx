@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchEventByPda } from "@/lib/eventQueries";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -28,7 +28,7 @@ export default function EventDetailsPage() {
     setLoading(true);
 
     const pubkey = new anchor.web3.PublicKey(eventId);
-    const result = await fetchEventByPda(wallet.adapter, pubkey);
+    const result = await fetchEventByPda(wallet.adapter as unknown as Wallet, pubkey);
 
     setEventData(result);
     setLoading(false);
@@ -179,7 +179,7 @@ export default function EventDetailsPage() {
               </button>
 
               {/* CLAIM BADGE CTA */}
-              <Link href={`/claim/${eventId}`}>
+              <Link href={`/badges/${eventId}`}>
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}

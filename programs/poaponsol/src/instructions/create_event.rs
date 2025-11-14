@@ -1,7 +1,12 @@
 use anchor_lang::prelude::*;
 use mpl_core::{instructions::CreateCollectionV2CpiBuilder, ID as CORE_PROGRAM_ID};
 
-use crate::{constants::{EVENT_SEED, PROFILE_SEED}, state::event::Event, state::OrganizerProfile};
+use crate::{
+    constants::{COLLECTION_AUTHORITY_SEED, EVENT_SEED, PROFILE_SEED},
+    state::event::Event,
+    state::CollectionAuthority,
+    state::OrganizerProfile,
+};
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
 pub struct CreateEventArgs {
@@ -42,6 +47,14 @@ pub struct CreateEvent<'info> {
 
     #[account(mut)]
     pub collection: Signer<'info>,
+    #[account(
+        init,
+        payer = organizer,
+        space = CollectionAuthority::INIT_SPACE,
+        seeds = [COLLECTION_AUTHORITY_SEED, collection.key().as_ref()],
+        bump,
+    )]
+    pub collection_authority: Account<'info, CollectionAuthority>,
 
     /// CHECK: Validated by Metaplex Core CPI
     #[account(address = CORE_PROGRAM_ID)]
@@ -57,6 +70,7 @@ impl<'info> CreateEvent<'info> {
         let collection = &ctx.accounts.collection;
         let core_program = &ctx.accounts.core_program;
         let profile = &mut ctx.accounts.profile;
+        let ca = &mut ctx.accounts.collection_authority;
 
         if profile.organizer == Pubkey::default() {
             profile.organizer = organizer.key();
@@ -65,13 +79,32 @@ impl<'info> CreateEvent<'info> {
         let event_index = profile.event_count;
         profile.event_count += 1;
 
+        let ca_bump = *ctx.bumps.get("collection_authority").unwrap();
+        ca.set_inner(CollectionAuthority {
+            bump: ca_bump,
+            creator: organizer.key(),
+            collection: collection.key(),
+            nft_name: args.name.clone(),
+            nft_uri: args.uri.clone(),
+        });
+
         let bump = ctx.bumps.event;
         let signer_seeds: &[&[&[u8]]] = &[&[
             EVENT_SEED,
-            organizer.key.as_ref(),
+            organizer.key().as_ref(),
             &event_index.to_le_bytes(),
             &[bump],
         ]];
+
+        let ca = &mut ctx.accounts.collection_authority;
+
+        ca.set_inner(CollectionAuthority {
+            bump,
+            creator: organizer.key(),
+            collection: collection.key(),
+            nft_name: args.name.clone(),
+            nft_uri: args.uri.clone(),
+        });
 
         CreateCollectionV2CpiBuilder::new(&core_program.to_account_info())
             .collection(&collection.to_account_info())

@@ -1,8 +1,5 @@
+use crate::{errors::PoapError, state::event::Event};
 use anchor_lang::prelude::*;
-use crate::{
-    state::event::Event,
-    errors::PoapError,
-};
 
 #[derive(Accounts)]
 pub struct CloseEvent<'info> {

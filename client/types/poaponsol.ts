@@ -140,6 +140,43 @@ export type Poaponsol = {
           "signer": true
         },
         {
+          "name": "collectionAuthority",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  108,
+                  108,
+                  101,
+                  99,
+                  116,
+                  105,
+                  111,
+                  110,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "collection"
+              }
+            ]
+          }
+        },
+        {
           "name": "coreProgram",
           "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
         },
@@ -230,6 +267,32 @@ export type Poaponsol = {
           }
         },
         {
+          "name": "claimRecord",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  108,
+                  97,
+                  105,
+                  109
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "event"
+              },
+              {
+                "kind": "account",
+                "path": "claimer"
+              }
+            ]
+          }
+        },
+        {
           "name": "coreProgram",
           "address": "CoREENxT6tW1HoK8ypY1SxRMZTcVPm7R94rH4PZNhX7d"
         },
@@ -242,6 +305,19 @@ export type Poaponsol = {
     }
   ],
   "accounts": [
+    {
+      "name": "claimRecord",
+      "discriminator": [
+        57,
+        229,
+        0,
+        9,
+        65,
+        62,
+        96,
+        7
+      ]
+    },
     {
       "name": "collectionAuthority",
       "discriminator": [
@@ -320,6 +396,42 @@ export type Poaponsol = {
     }
   ],
   "types": [
+    {
+      "name": "claimRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "event",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "collectionMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "claimedAt",
+            "type": "i64"
+          },
+          {
+            "name": "eventName",
+            "type": "string"
+          },
+          {
+            "name": "eventUri",
+            "type": "string"
+          }
+        ]
+      }
+    },
     {
       "name": "collectionAuthority",
       "type": {
@@ -434,6 +546,11 @@ export type Poaponsol = {
     }
   ],
   "constants": [
+    {
+      "name": "claimSeed",
+      "type": "bytes",
+      "value": "[99, 108, 97, 105, 109]"
+    },
     {
       "name": "collectionAuthoritySeed",
       "type": "bytes",

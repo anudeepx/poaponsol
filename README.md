@@ -6,20 +6,22 @@
 
 ```bash 
 avula@AsusVivobook16x:~/poaponsol$ anchor deploy --provider.cluster devnet
+
 Deploying cluster: https://api.devnet.solana.com
 Upgrade authority: /home/avula/.config/solana/id.json
 Deploying program "poaponsol"...
 Program path: /home/avula/poaponsol/target/deploy/poaponsol.so...
 Program Id: DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r
 
-Signature: 5jEEh6pDKJHwDiqSdPw7GZWXTvHaXt1YBes85f2o7oQbZ9KhHLBMraGf26V9AK6tS2gNW15K1gCbQdddnx1c5TnV
+Signature: Teo3YK1iq8HvYiPSdX7chUNGFsEnMHfwWqMUFvCq1YphWnYEAwSzvVCn6Cv7ioQFqgvF7sk8jUvrmFGEgJbMgLW
 
 Waiting for program DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r to be confirmed...
 Program confirmed on-chain
-Idl data length: 1069 bytes
-Step 0/1069 
-Step 600/1069 
-Idl account created: HxfApq92znBg7cXTWYL47B6sKg54wyddpQtY2yMUNUFW
+Idl data length: 1277 bytes
+Step 0/1277 
+Step 600/1277 
+Step 1200/1277 
+Idl account HxfApq92znBg7cXTWYL47B6sKg54wyddpQtY2yMUNUFW successfully upgraded
 Deploy success
 
 avula@AsusVivobook16x:~/poaponsol$ solana program show DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r

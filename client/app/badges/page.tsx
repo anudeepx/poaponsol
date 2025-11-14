@@ -8,7 +8,7 @@ import { ExternalLink, Calendar, Ticket } from "lucide-react";
 import { fetchUserBadges } from "@/lib/badgeQueries";
 
 export default function BadgesPage() {
-  const { publicKey } = useWallet();
+  const { publicKey, wallet } = useWallet();
   const [badges, setBadges] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -16,8 +16,8 @@ export default function BadgesPage() {
     if (!publicKey) return;
     setLoading(true);
 
-    const list = await fetchUserBadges(publicKey);
-    // setBadges(list);
+    const list = await fetchUserBadges(wallet!, publicKey);
+    setBadges(list);
 
     setLoading(false);
   };

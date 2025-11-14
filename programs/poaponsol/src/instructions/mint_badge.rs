@@ -2,16 +2,16 @@ use anchor_lang::prelude::*;
 use mpl_core::{
     instructions::CreateV2CpiBuilder,
     types::{
-        Attribute, Attributes, BurnDelegate, FreezeDelegate, Plugin,
-        PluginAuthority, PluginAuthorityPair,
+        Attribute, Attributes, BurnDelegate, FreezeDelegate, Plugin, PluginAuthority,
+        PluginAuthorityPair,
     },
     ID as CORE_PROGRAM_ID,
 };
 
 use crate::{
+    constants::{CLAIM_SEED, COLLECTION_AUTHORITY_SEED},
     errors::PoapError,
-    state::{collection_authority::CollectionAuthority, event::Event},
-    constants::COLLECTION_AUTHORITY_SEED,
+    state::{claim_record::ClaimRecord, collection_authority::CollectionAuthority, event::Event},
 };
 
 #[derive(Accounts)]
@@ -46,6 +46,15 @@ pub struct MintBadge<'info> {
     )]
     pub collection_authority: Account<'info, CollectionAuthority>,
 
+    #[account(
+        init,
+        payer = claimer,
+        space = ClaimRecord::LEN,
+        seeds = [CLAIM_SEED, event.key().as_ref(), claimer.key().as_ref()],
+        bump
+    )]
+    pub claim_record: Account<'info, ClaimRecord>,
+
     #[account(address = CORE_PROGRAM_ID)]
     /// CHECK: verified by core CPI
     pub core_program: UncheckedAccount<'info>,
@@ -60,6 +69,8 @@ impl<'info> MintBadge<'info> {
         let collection = &ctx.accounts.collection;
         let collection_authority = &ctx.accounts.collection_authority;
         let core_program = &ctx.accounts.core_program;
+        let record = &mut ctx.accounts.claim_record;
+        let event = &ctx.accounts.event;
 
         let signer_seeds: &[&[&[u8]]] = &[&[
             COLLECTION_AUTHORITY_SEED,
@@ -120,6 +131,16 @@ impl<'info> MintBadge<'info> {
             ])
             .external_plugin_adapters(vec![])
             .invoke_signed(signer_seeds)?;
+
+        record.set_inner(ClaimRecord {
+            wallet: claimer.key(),
+            event: event.key(),
+            mint: badge_mint.key(),
+            collection_mint: collection.key(),
+            claimed_at: timestamp,
+            event_name: event.name.clone(),
+            event_uri: event.uri.clone(),
+        });
 
         Ok(())
     }
