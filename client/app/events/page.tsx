@@ -16,7 +16,7 @@ export default function EventsPage() {
     if (!connected || !wallet?.adapter) return;
 
     setLoading(true);
-    const list = await fetchEventsByOrganizer(wallet.adapter, publicKey!);
+    const list = await fetchEventsByOrganizer(wallet.adapter as any, publicKey!);
     setEvents(list || []);
     setLoading(false);
   };
@@ -82,7 +82,6 @@ export default function EventsPage() {
                   shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] 
                   transition-all duration-300 group overflow-hidden"
               >
-                {/* Glow */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.07),transparent_70%)] pointer-events-none" />
 
                 <div className="relative z-10">

@@ -130,6 +130,9 @@
         },
         {
           "name": "collection",
+          "docs": [
+            "The collection mint Keypair provided by organizer (new mint account)"
+          ],
           "writable": true,
           "signer": true
         },
@@ -387,6 +390,11 @@
       "code": 6006,
       "name": "EventAlreadyClosed",
       "msg": "event is already closed"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidArgument",
+      "msg": "Not authorized to perform this action"
     }
   ],
   "types": [
@@ -518,6 +526,10 @@
           {
             "name": "is_active",
             "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

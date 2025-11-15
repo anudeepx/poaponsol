@@ -20,13 +20,14 @@ pub mod poaponsol {
         ctx: Context<CreateEvent>,
         args: create_event::CreateEventArgs,
     ) -> Result<()> {
-        create_event::CreateEvent::handler(ctx, args)
+        ctx.accounts.handler(args, &ctx.bumps)
     }
+
     pub fn mint_badge(ctx: Context<MintBadge>) -> Result<()> {
-        MintBadge::handler(ctx)
+        ctx.accounts.handler()
     }
 
     pub fn close_event(ctx: Context<CloseEvent>) -> Result<()> {
-        close_event::handler(ctx)
+        ctx.accounts.handler()
     }
 }

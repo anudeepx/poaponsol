@@ -31,7 +31,7 @@ pub struct MintBadge<'info> {
     )]
     pub event: Account<'info, Event>,
 
-    /// The collection NFT mint (must belong to Metaplex Core)
+    /// The collection NFT mint
     #[account(
         mut,
         constraint = collection.owner == &CORE_PROGRAM_ID @ PoapError::InvalidCollection,
@@ -63,14 +63,14 @@ pub struct MintBadge<'info> {
 }
 
 impl<'info> MintBadge<'info> {
-    pub fn handler(ctx: Context<Self>) -> Result<()> {
-        let claimer = &ctx.accounts.claimer;
-        let badge_mint = &ctx.accounts.badge_mint;
-        let collection = &ctx.accounts.collection;
-        let collection_authority = &ctx.accounts.collection_authority;
-        let core_program = &ctx.accounts.core_program;
-        let record = &mut ctx.accounts.claim_record;
-        let event = &ctx.accounts.event;
+    pub fn handler(&mut self) -> Result<()> {
+        let claimer = &self.claimer;
+        let badge_mint = &self.badge_mint;
+        let collection = &self.collection;
+        let collection_authority = &self.collection_authority;
+        let core_program = &self.core_program;
+        let record = &mut self.claim_record;
+        let event = &self.event;
 
         let signer_seeds: &[&[&[u8]]] = &[&[
             COLLECTION_AUTHORITY_SEED,
@@ -87,7 +87,7 @@ impl<'info> MintBadge<'info> {
             .payer(&claimer.to_account_info())
             .owner(Some(&claimer.to_account_info()))
             .update_authority(None)
-            .system_program(&ctx.accounts.system_program.to_account_info())
+            .system_program(&self.system_program.to_account_info())
             .name(collection_authority.nft_name.clone())
             .uri(collection_authority.nft_uri.clone())
             .plugins(vec![
@@ -114,14 +114,12 @@ impl<'info> MintBadge<'info> {
                     }),
                     authority: None,
                 },
-                // Freeze Delegate - collection authority can freeze
                 PluginAuthorityPair {
                     plugin: Plugin::FreezeDelegate(FreezeDelegate { frozen: true }),
                     authority: Some(PluginAuthority::Address {
                         address: collection_authority.key(),
                     }),
                 },
-                // Burn Delegate - collection authority can burn if needed
                 PluginAuthorityPair {
                     plugin: Plugin::BurnDelegate(BurnDelegate {}),
                     authority: Some(PluginAuthority::Address {

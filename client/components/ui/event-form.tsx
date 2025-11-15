@@ -34,6 +34,8 @@ export default function EventForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setLoading(true);
+      setErrorMessage("");
       const args = {
         name: `${formData.name}`,
         uri: `${formData.uri}`,
@@ -60,7 +62,7 @@ export default function EventForm({
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="backdrop-blur-md bg-black/40 border border-emerald-500/20 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.1)] p-8 w-full max-w-2xl mx-auto"
+      // className="backdrop-blur-md bg-black/40 border border-emerald-500/20 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.1)] p-8 w-full max-w-2xl mx-auto"
     >
       <h2 className="text-3xl md:text-4xl font-semibold text-emerald-400 mb-6">
         Create New Event
@@ -146,8 +148,11 @@ export default function EventForm({
                 : "bg-neutral-800 border-neutral-700 text-neutral-500 cursor-not-allowed"
             }`}
           >
-            {walletConnected ? "Create Event" : "Connect Wallet to Proceed"}
-            {loading ? "Processing..." : ""}
+            {loading
+            ? "Processing..."
+            : walletConnected
+            ? "Create Event"
+            : "Connect Wallet to Proceed"}
             <ArrowUpRight size={18} />
           </motion.button>
         </div>

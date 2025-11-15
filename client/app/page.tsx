@@ -8,7 +8,7 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-[#0B0B0B] text-white">
       <Navbar />
 
-      <section className="flex flex-col items-center justify-center mt-20 px-6 md:px-0">
+      <section className="flex flex-col items-center justify-center mt-0 md:mt-20 px-6 md:px-0">
         <Hero />
       </section>
       <section

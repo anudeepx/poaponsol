@@ -26,7 +26,7 @@ export default function Footer() {
   };
   return (
     <>
-      <footer className="h-[30rem] md:h-[40rem] relative py-10 mt-20">
+      <footer className="h-[30rem] md:h-[40rem] relative py-10 mt-0 md:mt-20">
         <div className="abosolute z-99">
           <Form open={formOpen} onClose={() => setFormOpen(false)} />
         </div>

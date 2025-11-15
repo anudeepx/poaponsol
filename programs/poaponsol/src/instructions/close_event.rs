@@ -15,13 +15,15 @@ pub struct CloseEvent<'info> {
     pub event: Account<'info, Event>,
 }
 
-pub fn handler(ctx: Context<CloseEvent>) -> Result<()> {
-    let event = &mut ctx.accounts.event;
+impl<'info> CloseEvent<'info> {
+    pub fn handler(&mut self) -> Result<()> {
+        let event = &mut self.event;
 
-    require!(event.is_active, PoapError::EventAlreadyClosed);
+        require!(event.is_active, PoapError::EventAlreadyClosed);
 
-    event.is_active = false;
-    msg!("Event '{}' closed successfully by organizer.", event.name);
+        event.is_active = false;
+        msg!("Event '{}' closed successfully by organizer.", event.name);
 
-    Ok(())
+        Ok(())
+    }
 }

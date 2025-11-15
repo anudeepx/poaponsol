@@ -136,6 +136,9 @@ export type Poaponsol = {
         },
         {
           "name": "collection",
+          "docs": [
+            "The collection mint Keypair provided by organizer (new mint account)"
+          ],
           "writable": true,
           "signer": true
         },
@@ -393,6 +396,11 @@ export type Poaponsol = {
       "code": 6006,
       "name": "eventAlreadyClosed",
       "msg": "event is already closed"
+    },
+    {
+      "code": 6007,
+      "name": "invalidArgument",
+      "msg": "Not authorized to perform this action"
     }
   ],
   "types": [
@@ -524,6 +532,10 @@ export type Poaponsol = {
           {
             "name": "isActive",
             "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

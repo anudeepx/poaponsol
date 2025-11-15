@@ -16,4 +16,6 @@ pub enum PoapError {
     NotAuthorized,
     #[msg("event is already closed")]
     EventAlreadyClosed,
+    #[msg("Not authorized to perform this action")]
+    InvalidArgument,
 }

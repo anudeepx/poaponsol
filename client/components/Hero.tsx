@@ -75,7 +75,7 @@ const Hero = () => {
           {...fadeInUpDelayed}
         >
           <motion.button
-            className="flex items-center gap-2 bg-emerald-400 h-16 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-full px-5 py-3 text-lg font-subtitle font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
+            className="flex items-center gap-2 bg-emerald-400 h-16 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-full px-2 md:px-5 py-3 text-lg font-subtitle font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleFormOpen}
@@ -98,7 +98,7 @@ const Hero = () => {
           </motion.button>
 
           <motion.button
-            className="flex items-center gap-2 border-2 h-16 bg-white text-black hover:bg-emerald-400 hover:text-white border-emerald-400 rounded-full px-5 py-3 text-lg font-subtitle font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/20 group hover:cursor-pointer"
+            className="flex items-center gap-2 border-2 h-16 bg-white text-black hover:bg-emerald-400 hover:text-white border-emerald-400 rounded-full px-2 md:px-5 py-2 text-lg font-subtitle font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/20 group hover:cursor-pointer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             onClick={handleClaimOpen}

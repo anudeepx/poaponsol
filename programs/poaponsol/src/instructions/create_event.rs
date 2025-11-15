@@ -6,6 +6,7 @@ use crate::{
     state::event::Event,
     state::CollectionAuthority,
     state::OrganizerProfile,
+    errors::PoapError,
 };
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone)]
@@ -47,6 +48,7 @@ pub struct CreateEvent<'info> {
 
     #[account(mut)]
     pub collection: Signer<'info>,
+
     #[account(
         init,
         payer = organizer,
@@ -64,22 +66,22 @@ pub struct CreateEvent<'info> {
 }
 
 impl<'info> CreateEvent<'info> {
-    pub fn handler(ctx: Context<Self>, args: CreateEventArgs) -> Result<()> {
-        let event = &mut ctx.accounts.event;
-        let organizer = &ctx.accounts.organizer;
-        let collection = &ctx.accounts.collection;
-        let core_program = &ctx.accounts.core_program;
-        let profile = &mut ctx.accounts.profile;
-        let ca = &mut ctx.accounts.collection_authority;
+    pub fn handler(&mut self, args: CreateEventArgs, bumps: &CreateEventBumps) -> Result<()> {
+        let event = &mut self.event;
+        let organizer = &self.organizer;
+        let collection = &self.collection;
+        let core_program = &self.core_program;
+        let profile = &mut self.profile;
+        let ca = &mut self.collection_authority;
 
         if profile.organizer == Pubkey::default() {
             profile.organizer = organizer.key();
         }
 
-        let event_index = profile.event_count;
-        profile.event_count += 1;
+        // let event_index = profile.event_count;
+        profile.event_count = profile.event_count.checked_add(1).ok_or(PoapError::InvalidArgument)?;
 
-        let ca_bump = *ctx.bumps.get("collection_authority").unwrap();
+        let ca_bump = bumps.collection_authority;
         ca.set_inner(CollectionAuthority {
             bump: ca_bump,
             creator: organizer.key(),
@@ -88,44 +90,35 @@ impl<'info> CreateEvent<'info> {
             nft_uri: args.uri.clone(),
         });
 
-        let bump = ctx.bumps.event;
-        let signer_seeds: &[&[&[u8]]] = &[&[
-            EVENT_SEED,
-            organizer.key().as_ref(),
-            &event_index.to_le_bytes(),
-            &[bump],
+        let binding = collection.key();
+        let ca_signer_seeds: &[&[&[u8]]] = &[&[
+            COLLECTION_AUTHORITY_SEED,
+            binding.as_ref(),
+            &[ca_bump],
         ]];
-
-        let ca = &mut ctx.accounts.collection_authority;
-
-        ca.set_inner(CollectionAuthority {
-            bump,
-            creator: organizer.key(),
-            collection: collection.key(),
-            nft_name: args.name.clone(),
-            nft_uri: args.uri.clone(),
-        });
 
         CreateCollectionV2CpiBuilder::new(&core_program.to_account_info())
             .collection(&collection.to_account_info())
             .payer(&organizer.to_account_info())
-            .update_authority(Some(&organizer.to_account_info()))
-            .system_program(&ctx.accounts.system_program.to_account_info())
+            .update_authority(Some(&self.collection_authority.to_account_info()))
+            .system_program(&self.system_program.to_account_info())
             .name(args.name.clone())
             .uri(args.uri.clone())
             .plugins(vec![])
             .external_plugin_adapters(vec![])
-            .invoke_signed(signer_seeds)?;
+            .invoke_signed(ca_signer_seeds)?;
 
+        let event_bump = bumps.event;
         event.set_inner(Event {
-            name: args.name.clone(),
+            name: args.name,
             organizer: organizer.key(),
             collection_mint: collection.key(),
-            uri: args.uri.clone(),
+            uri: args.uri,
             start_timestamp: args.start_timestamp,
             end_timestamp: args.end_timestamp,
             max_claims: args.max_claims,
             is_active: true,
+            bump: event_bump,
         });
 
         Ok(())

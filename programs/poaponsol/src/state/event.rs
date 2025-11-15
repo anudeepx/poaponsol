@@ -10,8 +10,9 @@ pub struct Event {
     pub end_timestamp: i64,
     pub max_claims: u32,
     pub is_active: bool,
+    pub bump: u8,
 }
 
 impl Event {
-    pub const LEN: usize = 8 + 4 + 32 + 32 + 4 + 200 + 8 + 8 + 4 + 1;
+    pub const LEN: usize = 8 + 4 + 32 + 32 + 4 + 200 + 8 + 8 + 4 + 1 + 1;
 }
