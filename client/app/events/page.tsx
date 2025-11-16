@@ -6,6 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Users, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import Breadcrumb from "@/components/BreadCrumb";
 
 export default function EventsPage() {
   const { publicKey, connected, wallet } = useWallet();
@@ -26,9 +27,17 @@ export default function EventsPage() {
   }, [connected]);
 
   return (
+    <>
     <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        <Breadcrumb
+      homeElement={'Home'}
+      separator={<span> | </span>}
+      activeClasses='text-emerald-400'
+      containerClasses='flex py-2 bg-[#0B0B0B]' 
+      listClasses='hover:underline mx-2 font-bold'
+      capitalizeLinks
+    />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -46,12 +55,10 @@ export default function EventsPage() {
           </p>
         </motion.div>
 
-        {/* Loading State */}
         {loading && (
           <div className="text-center text-neutral-500 py-20">Loading events...</div>
         )}
 
-        {/* No Events */}
         {!loading && events.length === 0 && (
           <div className="text-center py-20 text-neutral-400">
             No events created yet.
@@ -65,7 +72,6 @@ export default function EventsPage() {
           </div>
         )}
 
-        {/* Events Grid */}
         <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -93,7 +99,6 @@ export default function EventsPage() {
                     {e.uri}
                   </p>
 
-                  {/* Info Section */}
                   <div className="flex flex-col gap-3 text-neutral-300 text-sm mt-4">
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-emerald-300" />
@@ -117,7 +122,7 @@ export default function EventsPage() {
                             : "bg-neutral-700 text-neutral-300"
                         }`}
                       >
-                        {e.isActive ? "Active" : "Ended"}
+                        {e.endTimestamp < Date.now() / 1000 ? "Ended" : "Active"}
                       </span>
                     </div>
                   </div>
@@ -140,5 +145,6 @@ export default function EventsPage() {
         </motion.div>
       </div>
     </main>
+    </>
   );
 }

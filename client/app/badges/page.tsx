@@ -6,6 +6,7 @@ import * as anchor from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLink, Calendar, Ticket } from "lucide-react";
 import { fetchUserBadges } from "@/lib/badgeQueries";
+import Link from "next/link";
 
 export default function BadgesPage() {
   const { publicKey, wallet } = useWallet();
@@ -29,8 +30,7 @@ export default function BadgesPage() {
   return (
     <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
       <div className="max-w-6xl mx-auto space-y-14">
-        
-        {/* Header */}
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,21 +48,18 @@ export default function BadgesPage() {
           </p>
         </motion.div>
 
-        {/* Loading */}
         {loading && (
           <div className="text-center py-20 text-neutral-500">
             Loading badges…
           </div>
         )}
 
-        {/* Empty */}
         {!loading && badges.length === 0 && (
           <div className="text-center py-20 text-neutral-500">
             You don’t have any badges yet.
           </div>
         )}
 
-        {/* Badge Grid */}
         <motion.div
           layout
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
@@ -78,28 +75,22 @@ export default function BadgesPage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
 
               <div className="relative z-10 flex flex-col items-center space-y-5">
-                {/* Badge Image */}
                 <div className="h-32 w-32 rounded-full overflow-hidden bg-gradient-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center">
                   <Ticket size={48} className="text-emerald-400" />
                 </div>
 
-                {/* Title */}
                 <h3 className="text-xl font-semibold text-white">
                   {b.name}
                 </h3>
-
-                {/* Mint */}
                 <p className="font-mono text-xs text-neutral-400 break-all text-center">
                   {b.mint}
                 </p>
 
-                {/* Claim Time */}
                 <div className="flex items-center gap-2 text-neutral-300 text-sm">
                   <Calendar size={16} className="text-emerald-300" />
                   {new Date(b.claimedAt * 1000).toLocaleString()}
                 </div>
 
-                {/* Explorer */}
                 <a
                   href={`https://explorer.solana.com/address/${b.mint}?cluster=devnet`}
                   target="_blank"
@@ -108,10 +99,9 @@ export default function BadgesPage() {
                   View on Explorer <ExternalLink size={14} />
                 </a>
 
-                {/* Details Button */}
-                <button className="mt-3 text-sm px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all">
+                <Link href={`/badges/${b.mint}`} className="mt-3 text-sm px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all">
                   View Details
-                </button>
+                </Link>
               </div>
             </motion.div>
           ))}

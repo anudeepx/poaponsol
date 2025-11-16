@@ -23,7 +23,7 @@ export function FeaturesSectionDemo() {
     {
       title: "On-Chain Verification",
       description:
-        "Each badge is backed by immutable smart contracts — verifiable event data stored in PDAs on Solana.",
+        "Each badge is backed by immutable smart contracts verifiable event data stored in PDAs on Solana.",
       icon: <IconNetwork />,
     },
     {

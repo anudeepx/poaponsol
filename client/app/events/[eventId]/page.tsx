@@ -68,7 +68,6 @@ export default function EventDetailsPage() {
   return (
     <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
       <div className="max-w-5xl mx-auto space-y-10">
-        {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -83,7 +82,6 @@ export default function EventDetailsPage() {
           </p>
         </motion.div>
 
-        {/* STATUS BADGE */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -101,8 +99,6 @@ export default function EventDetailsPage() {
             {status}
           </span>
         </motion.div>
-
-        {/* DETAILS PANEL */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,7 +107,6 @@ export default function EventDetailsPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
 
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* LEFT SIDE */}
             <div className="space-y-6">
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-emerald-300">Event Info</h3>
@@ -135,7 +130,6 @@ export default function EventDetailsPage() {
                 <span>Max Claims: {e.maxClaims}</span>
               </div>
 
-              {/* Organizer */}
               <div className="text-sm text-neutral-400 break-all">
                 <strong className="text-neutral-300">Organizer:</strong>
                 <br />
@@ -143,9 +137,7 @@ export default function EventDetailsPage() {
               </div>
             </div>
 
-            {/* RIGHT SIDE */}
             <div className="space-y-6">
-              {/* Collection Mint */}
               <div>
                 <h3 className="text-lg font-semibold text-emerald-300 mb-2">
                   Collection Mint
@@ -155,7 +147,6 @@ export default function EventDetailsPage() {
                 </p>
               </div>
 
-              {/* Event PDA */}
               <div>
                 <h3 className="text-lg font-semibold text-emerald-300 mb-2">
                   Event PDA
@@ -163,7 +154,6 @@ export default function EventDetailsPage() {
                 <p className="text-neutral-400 break-all">{eventId}</p>
               </div>
 
-              {/* Explorer Link */}
               <a
                 href={`https://explorer.solana.com/address/${eventId}?cluster=devnet`}
                 target="_blank"
@@ -172,13 +162,14 @@ export default function EventDetailsPage() {
                 View on Explorer <ExternalLink size={16} />
               </a>
 
-              {/* SHARE + QR SOON */}
               <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 border border-neutral-700 hover:border-emerald-400 hover:text-emerald-300 transition-all">
                 <QrCode size={16} />
-                Share Event QR
+                Share Event QR 
+                <span className="text-yellow-300">
+                  (Coming Soon)
+                </span>
               </button>
 
-              {/* CLAIM BADGE CTA */}
               <Link href={`/badges/${eventId}`}>
                 <motion.button
                   whileHover={{ scale: 1.03 }}

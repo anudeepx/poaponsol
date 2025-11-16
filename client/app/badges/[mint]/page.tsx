@@ -147,7 +147,10 @@ export default function BadgeDetailsPage(){
             </div>
 
             <button className="px-4 py-3 rounded-xl bg-emerald-500/20 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all flex items-center gap-2 text-emerald-300 text-sm">
-              <QrCode size={16} /> Generate Shareable QR
+              <QrCode size={16} /> Generate Shareable QR 
+              <span className="text-yellow-300">
+                (Coming Soon)
+              </span>
             </button>
           </div>
         </motion.div>
