@@ -28,16 +28,16 @@ export default function EventsPage() {
 
   return (
     <>
-    <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
+    <main className="min-h-screen bg-[#0B0B0B] text-white pt-12 px-6">
       <div className="max-w-7xl mx-auto">
         <Breadcrumb
-      homeElement={'Home'}
-      separator={<span> | </span>}
-      activeClasses='text-emerald-400'
-      containerClasses='flex py-2 bg-[#0B0B0B]' 
-      listClasses='hover:underline mx-2 font-bold'
-      capitalizeLinks
-    />
+          homeElement={'Home'}
+          separator={<span> | </span>}
+          activeClasses='text-emerald-400'
+          containerClasses='flex py-2 bg-[#0B0B0B] mb-10 md:mb-2' 
+          listClasses='hover:underline mx-2 font-bold'
+          capitalizeLinks
+        />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -117,7 +117,7 @@ export default function EventsPage() {
                     <div>
                       <span
                         className={`text-xs px-3 py-1 rounded-full ${
-                          e.isActive
+                          !(e.endTimestamp < Date.now() / 1000)
                             ? "bg-emerald-500/20 text-emerald-400"
                             : "bg-neutral-700 text-neutral-300"
                         }`}

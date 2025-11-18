@@ -7,6 +7,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLink, Calendar, Ticket } from "lucide-react";
 import { fetchUserBadges } from "@/lib/badgeQueries";
 import Link from "next/link";
+import Breadcrumb from "@/components/BreadCrumb";
 
 export default function BadgesPage() {
   const { publicKey, wallet } = useWallet();
@@ -28,9 +29,16 @@ export default function BadgesPage() {
   }, [publicKey]);
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
+    <main className="min-h-screen bg-[#0B0B0B] text-white pt-12 px-6">
       <div className="max-w-6xl mx-auto space-y-14">
-
+        <Breadcrumb
+          homeElement={'Home'}
+          separator={<span> | </span>}
+          activeClasses='text-emerald-400'
+          containerClasses='flex py-2 bg-[#0B0B0B] md:mb-2' 
+          listClasses='hover:underline mx-2 font-bold'
+          capitalizeLinks
+        />
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}

@@ -170,7 +170,7 @@ export default function EventDetailsPage() {
                 </span>
               </button>
 
-              <Link href={`/badges/${eventId}`}>
+              <Link href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}>
                 <motion.button
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}

@@ -15,6 +15,7 @@ import {
 import { fetchBadgeDetails } from "@/lib/badgeQueries";
 import { useParams } from 'next/navigation'
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
+import Breadcrumb from "@/components/BreadCrumb";
 
 export default function BadgeDetailsPage(){
   const { mint } = useParams<{ mint: string}>()!;
@@ -24,7 +25,6 @@ export default function BadgeDetailsPage(){
 
   const loadDetails = async () => {
     setLoading(true);
-
     const mintKey = new anchor.web3.PublicKey(mint);
     const info = await fetchBadgeDetails(wallet!.adapter as unknown as Wallet ,mintKey);
 
@@ -39,14 +39,14 @@ export default function BadgeDetailsPage(){
   if (loading)
     return (
       <main className="min-h-screen bg-[#0B0B0B] text-white flex justify-center items-center">
-        <p className="text-neutral-500">Loading badge details…</p>
+        <p className="text-neutral-500">Loading...</p>
       </main>
     );
 
   if (!details)
     return (
       <main className="min-h-screen bg-[#0B0B0B] text-white flex justify-center items-center">
-        <p className="text-neutral-500">Badge not found.</p>
+        <p className="text-neutral-500">Badge not found or Event has ended.</p>
       </main>
     );
 
@@ -60,7 +60,15 @@ export default function BadgeDetailsPage(){
   } = details;
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
+    <main className="min-h-screen bg-[#0B0B0B] text-white pt-12 px-6">
+      <Breadcrumb
+          homeElement={'Home'}
+          separator={<span> | </span>}
+          activeClasses='text-emerald-400'
+          containerClasses='flex py-2 bg-[#0B0B0B] md:mb-12' 
+          listClasses='hover:underline mx-2 font-bold'
+          capitalizeLinks
+        />
       <div className="max-w-5xl mx-auto space-y-14">
         
         <motion.div
@@ -118,7 +126,7 @@ export default function BadgeDetailsPage(){
 
               <div className="flex items-center gap-3 text-neutral-300">
                 <User size={18} className="text-emerald-300" />
-                <span>Owner: </span>
+                <span>Owner: {}</span>
               </div>
 
               <div className="flex items-center gap-3 text-neutral-300">
