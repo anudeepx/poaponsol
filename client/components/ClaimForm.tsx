@@ -7,6 +7,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { mintBadge } from "@/lib/badges";
 import { toast } from "sonner";
 import * as anchor from "@coral-xyz/anchor";
+import CelebrationOverlay from "@/components/Celebration";
 
 const backdrop = {
   hidden: { opacity: 0 },
@@ -33,6 +34,7 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
     collectionMint: "",
   });
   const [formError, setFormError] = useState("");
+  const [showCelebration, setShowCelebration] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
@@ -57,6 +59,8 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
       const collectionPubkey = new anchor.web3.PublicKey(formData.collectionMint.trim());
       const badgeMint = await mintBadge(wallet.adapter as any, eventPubkey, collectionPubkey);
       toast.success(`Badge minted successfully: ${badgeMint.toBase58()}`);
+      setShowCelebration(true);
+      await new Promise((r) => setTimeout(r, 500));
       onClose();
     } catch (err: any) {
       console.error(err);
@@ -76,6 +80,10 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
           animate="visible"
           exit="exit"
         >
+          <CelebrationOverlay 
+            show={showCelebration} 
+            onFinish={() => setShowCelebration(false)} 
+          />
           <div className="absolute inset-0" onClick={onClose} />
           {formError && (<div className="absolute top-6 bg-red-600 text-white px-4 py-2 rounded-md shadow-md">
             {formError}
