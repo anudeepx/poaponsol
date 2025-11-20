@@ -8,6 +8,7 @@ import { ExternalLink, Calendar, Ticket } from "lucide-react";
 import { fetchUserBadges } from "@/lib/badgeQueries";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
+import { toast } from "sonner";
 
 export default function BadgesPage() {
   const { publicKey, wallet } = useWallet();
@@ -15,7 +16,11 @@ export default function BadgesPage() {
   const [loading, setLoading] = useState(true);
 
   const loadBadges = async () => {
-    if (!publicKey) return;
+    if (!publicKey) {
+      toast.error("Please connect your wallet to view your badges.");
+      setLoading(false);
+      return;
+    }
     setLoading(true);
 
     const list = await fetchUserBadges(wallet!, publicKey);

@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { ArrowUpRight, Calendar, Users, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
+import { toast } from "sonner";
 
 export default function EventsPage() {
   const { publicKey, connected, wallet } = useWallet();
@@ -14,7 +15,11 @@ export default function EventsPage() {
   const [loading, setLoading] = useState(true);
 
   const loadEvents = async () => {
-    if (!connected || !wallet?.adapter) return;
+    if (!connected || !wallet?.adapter) {
+      toast.error("Please connect your wallet to view your events.");
+      setLoading(false);
+      return;
+    }
 
     setLoading(true);
     const list = await fetchEventsByOrganizer(wallet.adapter as any, publicKey!);
