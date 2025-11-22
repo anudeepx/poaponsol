@@ -10,6 +10,8 @@ import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
+import { EventHoverCard } from "@/components/EventHoverCard";
 
 export default function BadgesPage() {
   const { publicKey, wallet } = useWallet();
@@ -41,11 +43,11 @@ export default function BadgesPage() {
     <main className="min-h-screen bg-[#0B0B0B] text-white pt-12 px-6">
       <div className="max-w-6xl mx-auto space-y-14">
         <Breadcrumb
-          homeElement={'Home'}
+          homeElement={"Home"}
           separator={<span> | </span>}
-          activeClasses='text-emerald-400'
-          containerClasses='flex py-2 bg-[#0B0B0B] md:mb-2' 
-          listClasses='hover:underline mx-2 font-bold'
+          activeClasses="text-emerald-400"
+          containerClasses="flex py-2 bg-[#0B0B0B] md:mb-2"
+          listClasses="hover:underline mx-2 font-bold"
           capitalizeLinks
         />
         <motion.div
@@ -82,23 +84,14 @@ export default function BadgesPage() {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
         >
           {badges.map((b, i) => (
-            <motion.div
-              key={b.mint}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.06 }}
-              className="relative bg-black/40 border border-emerald-500/20 rounded-2xl p-6 shadow-[0_0_25px_rgba(16,185,129,0.15)] backdrop-blur-xl hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] transition-all duration-300"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
-
+            <CornerHoverCard key={i} className="relative p-6 bg-[#121212] border border-neutral-800 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+              <EventHoverCard>
               <div className="relative z-10 flex flex-col items-center space-y-5">
                 <div className="h-32 w-32 rounded-full overflow-hidden bg-linear-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center">
                   <Ticket size={48} className="text-emerald-400" />
                 </div>
 
-                <h3 className="text-xl font-semibold text-white">
-                  {b.name}
-                </h3>
+                <h3 className="text-xl font-semibold text-white">{b.name}</h3>
                 <p className="font-mono text-xs text-neutral-400 break-all text-center">
                   {b.mint}
                 </p>
@@ -116,11 +109,15 @@ export default function BadgesPage() {
                   View on Explorer <ExternalLink size={14} />
                 </a>
 
-                <Link href={`/badges/${b.mint}`} className="mt-3 text-sm px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all">
+                <Link
+                  href={`/badges/${b.mint}`}
+                  className="mt-3 text-sm px-4 py-2 rounded-lg bg-emerald-500/20 border border-emerald-500/40 hover:bg-emerald-500/30 transition-all"
+                >
                   View Details
                 </Link>
               </div>
-            </motion.div>
+              </EventHoverCard>
+            </CornerHoverCard>
           ))}
         </motion.div>
       </div>

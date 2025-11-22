@@ -9,6 +9,8 @@ import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { EventHoverCard } from "@/components/EventHoverCard";
+import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
 
 export default function EventsPage() {
   const { publicKey, connected, wallet } = useWallet();
@@ -86,22 +88,13 @@ export default function EventsPage() {
           {events.map((item, idx) => {
             const e = item.data;
             return (
-              <motion.div
-                key={item.pubkey.toBase58()}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                className="relative p-6 rounded-2xl bg-black/40 border border-emerald-500/20 backdrop-blur-xl 
-                  shadow-[0_0_15px_rgba(16,185,129,0.15)] hover:shadow-[0_0_30px_rgba(16,185,129,0.25)] 
-                  transition-all duration-300 group overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.07),transparent_70%)] pointer-events-none" />
-
-                <div className="relative z-10">
+              <CornerHoverCard key={item.pubkey.toBase58()}>
+                <EventHoverCard
+                  key={item.pubkey.toBase58()}
+                >
                   <h3 className="text-2xl font-semibold mb-2 text-emerald-300">
                     {e.name}
                   </h3>
-
                   <p className="text-neutral-400 text-sm mb-4 line-clamp-2">
                     {e.uri}
                   </p>
@@ -110,8 +103,10 @@ export default function EventsPage() {
                     <div className="flex items-center gap-2">
                       <Calendar size={16} className="text-emerald-300" />
                       <span>
-                        {new Date(Number(e.startTimestamp) * 1000).toDateString()}
-                        {" → "}
+                        {new Date(
+                          Number(e.startTimestamp) * 1000
+                        ).toDateString()}{" "}
+                        →{" "}
                         {new Date(Number(e.endTimestamp) * 1000).toDateString()}
                       </span>
                     </div>
@@ -124,13 +119,14 @@ export default function EventsPage() {
                     <div>
                       <span
                         className={`text-xs px-3 py-1 rounded-full ${
-                          // eslint-disable-next-line react-hooks/purity
                           !(e.endTimestamp < Date.now() / 1000)
                             ? "bg-emerald-500/20 text-emerald-400"
                             : "bg-neutral-700 text-neutral-300"
                         }`}
                       >
-                        {e.endTimestamp < Date.now() / 1000 ? "Ended" : "Active"}
+                        {e.endTimestamp < Date.now() / 1000
+                          ? "Ended"
+                          : "Active"}
                       </span>
                     </div>
                   </div>
@@ -138,16 +134,15 @@ export default function EventsPage() {
                   <Link href={`/events/${item.pubkey.toBase58()}`}>
                     <button
                       className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-2 
-                        rounded-xl border border-emerald-500/40 text-emerald-300 
-                        group-hover:bg-emerald-400 group-hover:text-black
-                        transition-all duration-300 cursor-pointer"
+                rounded-xl border border-emerald-500/40 text-emerald-300 
+                group-hover:bg-emerald-400 group-hover:text-black transition-all duration-300"
                     >
                       View Details
                       <ChevronRight size={18} />
                     </button>
                   </Link>
-                </div>
-              </motion.div>
+                </EventHoverCard>
+              </CornerHoverCard>
             );
           })}
         </motion.div>

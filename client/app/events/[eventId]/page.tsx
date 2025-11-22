@@ -15,6 +15,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import * as anchor from "@coral-xyz/anchor";
+import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
+import { EventHoverCard } from "@/components/EventHoverCard";
 
 export default function EventDetailsPage() {
   const params = useParams();
@@ -73,9 +75,7 @@ export default function EventDetailsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h1 className="text-4xl md:text-6xl font-semibold">
-            {e.name}
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-semibold">{e.name}</h1>
 
           <p className="text-neutral-400 max-w-2xl mx-auto mt-3">
             Your on-chain POAP event hosted on Solana.
@@ -99,93 +99,91 @@ export default function EventDetailsPage() {
             {status}
           </span>
         </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-black/40 border border-emerald-500/20 backdrop-blur-xl rounded-2xl p-8 shadow-[0_0_40px_rgba(16,185,129,0.15)] relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
+        <CornerHoverCard>
+          <EventHoverCard
+            key={eventId}
+          >
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-emerald-300">
+                    Event Info
+                  </h3>
+                  <p className="text-neutral-300">{e.uri}</p>
+                </div>
 
-          <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-lg font-semibold text-emerald-300">Event Info</h3>
-                <p className="text-neutral-300">
-                  {e.uri}
-                </p>
+                <div className="flex items-center gap-3 text-neutral-300">
+                  <Calendar className="text-emerald-400" size={20} />
+                  <span>{readableStart}</span>
+                </div>
+
+                <div className="flex items-center gap-3 text-neutral-300">
+                  <Clock className="text-emerald-400" size={20} />
+                  <span>{readableEnd}</span>
+                </div>
+
+                <div className="flex items-center gap-3 text-neutral-300">
+                  <Users className="text-emerald-400" size={20} />
+                  <span>Max Claims: {e.maxClaims}</span>
+                </div>
+
+                <div className="text-sm text-neutral-400 break-all">
+                  <strong className="text-neutral-300">Organizer:</strong>
+                  <br />
+                  {e.organizer.toBase58()}
+                </div>
               </div>
 
-              <div className="flex items-center gap-3 text-neutral-300">
-                <Calendar className="text-emerald-400" size={20} />
-                <span>{readableStart}</span>
-              </div>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-emerald-300 mb-2">
+                    Collection Mint
+                  </h3>
+                  <p className="text-neutral-400 break-all">
+                    {e.collectionMint.toBase58()}
+                  </p>
+                </div>
 
-              <div className="flex items-center gap-3 text-neutral-300">
-                <Clock className="text-emerald-400" size={20} />
-                <span>{readableEnd}</span>
-              </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-emerald-300 mb-2">
+                    Event PDA
+                  </h3>
+                  <p className="text-neutral-400 break-all">{eventId}</p>
+                </div>
 
-              <div className="flex items-center gap-3 text-neutral-300">
-                <Users className="text-emerald-400" size={20} />
-                <span>Max Claims: {e.maxClaims}</span>
-              </div>
+                <a
+                  href={`https://explorer.solana.com/address/${eventId}?cluster=devnet`}
+                  target="_blank"
+                  className="inline-flex items-center gap-2 text-emerald-300 hover:text-emerald-200"
+                >
+                  View on Explorer <ExternalLink size={16} />
+                </a>
 
-              <div className="text-sm text-neutral-400 break-all">
-                <strong className="text-neutral-300">Organizer:</strong>
-                <br />
-                {e.organizer.toBase58()}
-              </div>
-            </div>
+                <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 border border-neutral-700 hover:border-emerald-400 hover:text-emerald-300 transition-all">
+                  <QrCode size={16} />
+                  Share Event QR
+                  <span className="text-yellow-300">(Coming Soon)</span>
+                </button>
 
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-lg font-semibold text-emerald-300 mb-2">
-                  Collection Mint
-                </h3>
-                <p className="text-neutral-400 break-all">
-                  {e.collectionMint.toBase58()}
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold text-emerald-300 mb-2">
-                  Event PDA
-                </h3>
-                <p className="text-neutral-400 break-all">{eventId}</p>
-              </div>
-
-              <a
-                href={`https://explorer.solana.com/address/${eventId}?cluster=devnet`}
-                target="_blank"
-                className="inline-flex items-center gap-2 text-emerald-300 hover:text-emerald-200"
-              >
-                View on Explorer <ExternalLink size={16} />
-              </a>
-
-              <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 border border-neutral-700 hover:border-emerald-400 hover:text-emerald-300 transition-all">
-                <QrCode size={16} />
-                Share Event QR 
-                <span className="text-yellow-300">
-                  (Coming Soon)
-                </span>
-              </button>
-
-              <Link href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}>
-                <motion.button
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
+                <Link
+                  href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
                     rounded-xl bg-gradient-to-tr from-emerald-500 to-emerald-400 text-black 
                     font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)]
                     transition-all"
-                >
-                  Claim Badge
-                  <ArrowUpRight size={18} />
-                </motion.button>
-              </Link>
+                  >
+                    Claim Badge
+                    <ArrowUpRight size={18} />
+                  </motion.button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </EventHoverCard>
+        </CornerHoverCard>
       </div>
     </main>
   );
