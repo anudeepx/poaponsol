@@ -9,27 +9,31 @@ import { fetchUserBadges } from "@/lib/badgeQueries";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function BadgesPage() {
   const { publicKey, wallet } = useWallet();
   const [badges, setBadges] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const loadBadges = async () => {
-    if (!publicKey) {
-      toast.error("Please connect your wallet to view your badges.");
-      setLoading(false);
-      return;
-    }
     setLoading(true);
 
-    const list = await fetchUserBadges(wallet!, publicKey);
+    const list = await fetchUserBadges(wallet!, publicKey!);
     setBadges(list);
 
     setLoading(false);
   };
 
   useEffect(() => {
+    if (!publicKey) {
+      toast.error("Please connect your wallet to view your badges.");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(false);
+      router.push("/");
+      return;
+    }
     loadBadges();
   }, [publicKey]);
 
@@ -51,13 +55,13 @@ export default function BadgesPage() {
         >
           <h1 className="text-4xl md:text-6xl font-semibold leading-tight">
             Your{" "}
-            <span className="bg-gradient-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
+            <span className="bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
               Badges
             </span>
           </h1>
 
           <p className="text-neutral-400 mt-3 max-w-xl mx-auto">
-            All POAP badges you've claimed across POAPonSOL.
+            All POAP badges you&apos;ve claimed across POAPonSOL.
           </p>
         </motion.div>
 
@@ -88,7 +92,7 @@ export default function BadgesPage() {
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
 
               <div className="relative z-10 flex flex-col items-center space-y-5">
-                <div className="h-32 w-32 rounded-full overflow-hidden bg-gradient-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center">
+                <div className="h-32 w-32 rounded-full overflow-hidden bg-linear-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center">
                   <Ticket size={48} className="text-emerald-400" />
                 </div>
 

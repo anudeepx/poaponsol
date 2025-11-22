@@ -4,31 +4,33 @@ import { useEffect, useState } from "react";
 import { fetchEventsByOrganizer, fetchActiveEvents } from "@/lib/eventQueries";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Calendar, Users, ChevronRight } from "lucide-react";
+import { Calendar, Users, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function EventsPage() {
   const { publicKey, connected, wallet } = useWallet();
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const loadEvents = async () => {
-    if (!connected || !wallet?.adapter) {
-      toast.error("Please connect your wallet to view your events.");
-      setLoading(false);
-      return;
-    }
-
     setLoading(true);
-    const list = await fetchEventsByOrganizer(wallet.adapter as any, publicKey!);
+    const list = await fetchEventsByOrganizer(wallet!.adapter as any, publicKey!);
     setEvents(list || []);
     setLoading(false);
   };
 
   useEffect(() => {
-    if (connected) loadEvents();
+    if (!publicKey) {
+      toast.error("Please connect your wallet to view your badges.");
+      setLoading(false);
+      router.push("/");
+      return;
+    }
+    loadEvents();
   }, [connected]);
 
   return (
@@ -122,6 +124,7 @@ export default function EventsPage() {
                     <div>
                       <span
                         className={`text-xs px-3 py-1 rounded-full ${
+                          // eslint-disable-next-line react-hooks/purity
                           !(e.endTimestamp < Date.now() / 1000)
                             ? "bg-emerald-500/20 text-emerald-400"
                             : "bg-neutral-700 text-neutral-300"

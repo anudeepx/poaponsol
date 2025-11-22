@@ -18,6 +18,12 @@ const Navbar = () => {
             </Link>
             <nav className="hidden md:flex items-center gap-8">
               <Link
+                href="#about"
+                className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
+              >
+               About
+              </Link>
+              <Link
                 href="#features"
                 className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
               >
@@ -27,13 +33,13 @@ const Navbar = () => {
                 href="/events"
                 className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
               >
-               My Events
+               Events
               </Link>
               <Link
                 href="/badges"
                 className="text-sm text-gray-300 hover:text-emerald-400 transition-colors"
               >
-               My Badges
+               Badges
               </Link>
             </nav>
             <div className="hidden md:block">

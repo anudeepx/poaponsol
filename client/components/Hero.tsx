@@ -1,14 +1,14 @@
 "use client";
 
-import { mintBadge } from "@/lib/badges";
+
 import { useWallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import * as anchor from "@coral-xyz/anchor";
 import Form from "@/components/Form";
 import ClaimForm from "./ClaimForm";
+import EmeraldGradient from "./EmeraldGradient";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -49,6 +49,7 @@ const Hero = () => {
   
   return (
     <section className="relative py-14 w-full mt-20">
+      <EmeraldGradient />
       <div className="abosolute z-99">
         <Form open={formOpen} onClose={() => setFormOpen(false)} />
         <ClaimForm open={claimOpen} onClose={() => setClaimOpen(false)} />
@@ -59,7 +60,7 @@ const Hero = () => {
       >
         <h1 className="font-headline text-5xl md:text-5xl leading-tight font-semibold max-w-xl text-balance">
           Create, claim, and verify{" "}
-          <span className="relative inline-block bg-gradient-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
+          <span className="relative inline-block bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
             attendance badges
           </span>{" "}
           effortlessly
