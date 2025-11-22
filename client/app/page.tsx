@@ -24,7 +24,7 @@ export default function Home() {
           <div className="max-w-md">
             <h2 className="text-3xl md:text-5xl font-semibold leading-tight mb-6">
               Why{" "}
-              <span className="text-emerald-400 bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
+              <span className="text-emerald-400 bg-linear-to-tr from-emerald-400 to-white bg-clip-text">
                 POAPonSOL
               </span>
               ?

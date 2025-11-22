@@ -6,3 +6,8 @@ node_modules
 test-ledger
 .yarn
 .vercel
+
+/generated/prisma
+
+.env
+/client/.env

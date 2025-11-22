@@ -18,7 +18,7 @@ export default function HowItWorks() {
     <section className="mt-32 w-full px-6 flex flex-col items-center">
       <motion.h2
         {...fadeInUp}
-        className="text-4xl md:text-6xl font-headline font-bold text-center mb-16"
+        className="text-4xl md:text-5xl font-headline font-bold text-center mb-16"
       >
         HOW IT{" "}
         <span className="text-emerald-400 bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">

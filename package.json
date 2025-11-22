@@ -6,7 +6,9 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",
-    "@metaplex-foundation/mpl-core": "^1.7.0"
+    "@metaplex-foundation/mpl-core": "^1.7.0",
+    "@prisma/client": "^7.0.0",
+    "prisma": "^7.0.0"
   },
   "devDependencies": {
     "@types/bn.js": "^5.1.0",
