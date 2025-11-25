@@ -84,7 +84,7 @@ export default function BadgesPage() {
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
         >
           {badges.map((b, i) => (
-            <CornerHoverCard key={i} className="relative p-6 bg-[#121212] border border-neutral-800 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow">
+            <CornerHoverCard key={i}>
               <EventHoverCard>
               <div className="relative z-10 flex flex-col items-center space-y-5">
                 <div className="h-32 w-32 rounded-full overflow-hidden bg-linear-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center">
