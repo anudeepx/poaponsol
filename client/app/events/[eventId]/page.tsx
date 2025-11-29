@@ -5,18 +5,23 @@ import { useParams } from "next/navigation";
 import { fetchEventByPda } from "@/lib/eventQueries";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
-import Link from "next/link";
+// import Link from "next/link";
 import {
   Calendar,
   Clock,
   Users,
-  ArrowUpRight,
+  // ArrowUpRight,
   QrCode,
   ExternalLink,
 } from "lucide-react";
 import * as anchor from "@coral-xyz/anchor";
 import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
 import { EventHoverCard } from "@/components/EventHoverCard";
+import { QRCodeCanvas } from "qrcode.react";
+import { X } from "lucide-react";
+import Link from "next/link";
+import Breadcrumb from "@/components/BreadCrumb";
+
 
 export default function EventDetailsPage() {
   const params = useParams();
@@ -24,6 +29,8 @@ export default function EventDetailsPage() {
   const { wallet, connected } = useWallet();
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [showQR, setShowQR] = useState(false);
+
 
   const loadEvent = async () => {
     if (!wallet?.adapter || !eventId) return;
@@ -68,7 +75,83 @@ export default function EventDetailsPage() {
       : "Active";
 
   return (
-    <main className="min-h-screen bg-[#0B0B0B] text-white pt-32 px-6">
+    <main className="min-h-screen bg-[#0B0B0B] text-white pt-10 px-6">
+      <Breadcrumb
+        homeElement={"Home"}
+        separator={<span> | </span>}
+        activeClasses="text-emerald-400"
+        containerClasses="flex py-2 bg-[#0B0B0B] md:mb-12"
+        listClasses="hover:underline mx-2 font-bold"
+        capitalizeLinks
+      />
+      {showQR && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[999]">
+          <div className="bg-[#111] p-6 rounded-xl border border-neutral-700 text-center relative">
+            <button
+              className="absolute top-3 right-3 text-neutral-400 hover:text-white hover:cursor-pointer"
+              onClick={() => setShowQR(false)}
+            >
+              <X size={30} />
+            </button>
+
+            <h2 className="text-xl font-semibold mb-4">Share Event QR</h2>
+
+            <QRCodeCanvas
+              value={`https://poaponsol.vercel.app/events/${eventId}`}
+              size={300}
+              bgColor="#111"
+              fgColor="#00d386"
+              includeMargin={true}
+            />
+
+            <div className="mt-5 flex gap-3 justify-center">
+              <button
+                onClick={async () => {
+                  const canvas = document.querySelector("canvas")!;
+                  const pngUrl = canvas.toDataURL("image/png");
+
+                  if (navigator.share) {
+                    const file = await fetch(pngUrl)
+                      .then((res) => res.blob())
+                      .then(
+                        (blob) =>
+                          new File([blob], "event-qr.png", {
+                            type: "image/png",
+                          })
+                      );
+
+                    navigator.share({
+                      title: "Event Link",
+                      text: "Scan this QR to view the event",
+                      files: [file],
+                    });
+                  } else {
+                    alert("Sharing not supported on this device.");
+                  }
+                }}
+                className="px-4 py-2 rounded-lg bg-emerald-500 text-black font-semibold hover:cursor-pointer transition-all"
+              >
+                Share
+              </button>
+
+              <button
+                onClick={() => {
+                  const canvas = document.querySelector("canvas")!;
+                  const pngUrl = canvas.toDataURL("image/png");
+
+                  const link = document.createElement("a");
+                  link.href = pngUrl;
+                  link.download = "event-qr.png";
+                  link.click();
+                }}
+                className="px-4 py-2 rounded-lg bg-neutral-700 hover:bg-neutral-600 font-semibold hover:cursor-pointer transition-all"
+              >
+                Download
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="max-w-5xl mx-auto space-y-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -100,26 +183,31 @@ export default function EventDetailsPage() {
           </span>
         </motion.div>
         <CornerHoverCard>
-          <EventHoverCard
-            key={eventId}
-          >
+          <EventHoverCard key={eventId}>
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-6">
                 <div className="space-y-2">
                   <h3 className="text-lg font-semibold text-emerald-300">
                     Event Info
                   </h3>
-                  <p className="text-neutral-300">{e.uri}</p>
+                  <a
+                    href={e.uri}
+                    className="text-neutral-300"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {e.uri}
+                  </a>
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
                   <Calendar className="text-emerald-400" size={20} />
-                  <span>{readableStart}</span>
+                  <span>From: {readableStart}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
                   <Clock className="text-emerald-400" size={20} />
-                  <span>{readableEnd}</span>
+                  <span>To: {readableEnd}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
@@ -159,13 +247,26 @@ export default function EventDetailsPage() {
                   View on Explorer <ExternalLink size={16} />
                 </a>
 
-                <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 border border-neutral-700 hover:border-emerald-400 hover:text-emerald-300 transition-all">
+                <button
+                  onClick={() => setShowQR(true)}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/40 border border-neutral-700 hover:border-emerald-400 hover:text-emerald-300 transition-all"
+                >
                   <QrCode size={16} />
                   Share Event QR
-                  <span className="text-yellow-300">(Coming Soon)</span>
                 </button>
+                <Link href={`/events/${eventId}/attendees`}>
+                  <button
+                    className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
+                    rounded-xl bg-linear-to-tr from-emerald-500 to-emerald-400 text-black 
+                    font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)]
+                    transition-all"
+                  >
+                    View Attendees
+                    <ExternalLink size={18} />
+                  </button>
+                </Link>
 
-                <Link
+                {/* <Link
                   href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
                 >
                   <motion.button
@@ -179,7 +280,7 @@ export default function EventDetailsPage() {
                     Claim Badge
                     <ArrowUpRight size={18} />
                   </motion.button>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </EventHoverCard>

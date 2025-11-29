@@ -54,7 +54,7 @@ export default function EventsPage() {
         >
           <h1 className="text-4xl md:text-6xl font-semibold">
             Your{" "}
-            <span className="bg-gradient-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
+            <span className="bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
               Events
             </span>
           </h1>

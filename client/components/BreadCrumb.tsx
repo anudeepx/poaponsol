@@ -26,13 +26,17 @@ const Breadcrumb = ({homeElement, separator, containerClasses, listClasses, acti
                 {pathNames.length > 0 && separator}
             {
                 pathNames.map( (link, index) => {
-                    let href = `/${pathNames.slice(0, index + 1).join('/')}`
-                    let itemClasses = paths === href ? `${listClasses} ${activeClasses}` : listClasses
-                    let itemLink = capitalizeLinks ? link[0].toUpperCase() + link.slice(1, link.length) : link
+                    const href = `/${pathNames.slice(0, index + 1).join('/')}`
+                    const itemClasses = paths === href ? `${listClasses} ${activeClasses}` : listClasses
+                    const itemLink = capitalizeLinks ? link[0].toUpperCase() + link.slice(1, link.length) : link
                     return (
                         <React.Fragment key={index}>
                             <li className={itemClasses} >
-                                <Link href={href}>{itemLink}</Link>
+                                <Link href={href}>{
+                                    itemLink.length > 20
+                                        ? itemLink.slice(0, 6) + '...' + itemLink.slice(itemLink.length - 4, itemLink.length)
+                                        : itemLink
+                                }</Link>
                             </li>
                             {pathNames.length !== index + 1 && separator}
                         </React.Fragment>

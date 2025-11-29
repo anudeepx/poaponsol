@@ -36,6 +36,12 @@ export default function EventForm({
     try {
       setLoading(true);
       setErrorMessage("");
+      const today = new Date().toISOString().split("T")[0];
+      if (formData.start < today) {
+        toast.error("Start date cannot be in the past");
+        setLoading(false);
+        return;
+      }
       const args = {
         name: `${formData.name}`,
         uri: `${formData.uri}`,
@@ -67,15 +73,15 @@ export default function EventForm({
       <h2 className="text-3xl md:text-4xl font-semibold text-emerald-400 mb-6">
         Create New Event
       </h2>
-      <h3 className="text-sm text-red-400 mb-4">
-        {errorMessage}
-      </h3>
+      <h3 className="text-sm text-red-400 mb-4">{errorMessage}</h3>
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-2 gap-6 text-neutral-200"
       >
         <div>
-          <label className="block text-sm mb-2 text-neutral-400">Event Name</label>
+          <label className="block text-sm mb-2 text-neutral-400">
+            Event Name
+          </label>
           <input
             type="text"
             name="name"
@@ -88,7 +94,9 @@ export default function EventForm({
         </div>
 
         <div>
-          <label className="block text-sm mb-2 text-neutral-400">Event URI</label>
+          <label className="block text-sm mb-2 text-neutral-400">
+            Event URI
+          </label>
           <input
             type="text"
             name="uri"
@@ -101,19 +109,24 @@ export default function EventForm({
         </div>
 
         <div>
-          <label className="block text-sm mb-2 text-neutral-400">Start Time</label>
+          <label className="block text-sm mb-2 text-neutral-400">
+            Start Time
+          </label>
           <input
             type="date"
             name="start"
             value={formData.start}
             onChange={handleChange}
+            min={new Date().toISOString().split("T")[0]}
             className="w-full bg-transparent border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-400 transition-all duration-200"
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm mb-2 text-neutral-400">End Time</label>
+          <label className="block text-sm mb-2 text-neutral-400">
+            End Time
+          </label>
           <input
             type="date"
             name="end"
@@ -125,7 +138,9 @@ export default function EventForm({
         </div>
 
         <div>
-          <label className="block text-sm mb-2 text-neutral-400">Max Claims</label>
+          <label className="block text-sm mb-2 text-neutral-400">
+            Max Claims
+          </label>
           <input
             type="number"
             name="maxClaims"
@@ -144,15 +159,15 @@ export default function EventForm({
             disabled={!walletConnected}
             className={`flex items-center justify-center gap-2 border-2 rounded-xl px-5 py-3 text-lg font-semibold hover:cursor-pointer transition-all duration-300 ${
               walletConnected
-                ? "bg-gradient-to-tr from-emerald-500 to-emerald-400 text-black border-emerald-500 hover:shadow-lg hover:shadow-emerald-400/20"
+                ? "bg-linear-to-tr from-emerald-500 to-emerald-400 text-black border-emerald-500 hover:shadow-lg hover:shadow-emerald-400/20"
                 : "bg-neutral-800 border-neutral-700 text-neutral-500 cursor-not-allowed"
             }`}
           >
             {loading
-            ? "Processing..."
-            : walletConnected
-            ? "Create Event"
-            : "Connect Wallet to Proceed"}
+              ? "Processing..."
+              : walletConnected
+              ? "Create Event"
+              : "Connect Wallet to Proceed"}
             <ArrowUpRight size={18} />
           </motion.button>
         </div>
