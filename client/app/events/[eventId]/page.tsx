@@ -13,6 +13,7 @@ import {
   // ArrowUpRight,
   QrCode,
   ExternalLink,
+  ArrowUpRight,
 } from "lucide-react";
 import * as anchor from "@coral-xyz/anchor";
 import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
@@ -26,10 +27,11 @@ import Breadcrumb from "@/components/BreadCrumb";
 export default function EventDetailsPage() {
   const params = useParams();
   const eventId = Array.isArray(params?.eventId) ? params?.eventId[0] : params?.eventId;
-  const { wallet, connected } = useWallet();
+  const { wallet, connected, publicKey } = useWallet();
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showQR, setShowQR] = useState(false);
+  const [isOrganizerWallet, setIsOrganizerWallet] = useState<boolean>(false);
 
 
   const loadEvent = async () => {
@@ -45,7 +47,8 @@ export default function EventDetailsPage() {
 
   useEffect(() => {
     if (connected) loadEvent();
-  }, [connected]);
+    setIsOrganizerWallet(publicKey?.toBase58() === eventData?.data.organizer.toBase58());
+  }, [connected, publicKey]);
 
   if (loading)
     return (
@@ -220,6 +223,23 @@ export default function EventDetailsPage() {
                   <br />
                   {e.organizer.toBase58()}
                 </div>
+                {!isOrganizerWallet && (
+                  <Link
+                    href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
+                        rounded-xl bg-linear-to-tr from-emerald-500 to-emerald-400 text-black 
+                        font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)]
+                        transition-all"
+                    >
+                      Claim Badge
+                      <ArrowUpRight size={18} />
+                    </motion.button>
+                  </Link>
+                )}
               </div>
 
               <div className="space-y-6">
@@ -254,33 +274,19 @@ export default function EventDetailsPage() {
                   <QrCode size={16} />
                   Share Event QR
                 </button>
-                <Link href={`/events/${eventId}/attendees`}>
-                  <button
-                    className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
+                {isOrganizerWallet && (
+                  <Link href={`/events/${eventId}/attendees`}>
+                    <button
+                      className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
                     rounded-xl bg-linear-to-tr from-emerald-500 to-emerald-400 text-black 
                     font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)]
                     transition-all"
-                  >
-                    View Attendees
-                    <ExternalLink size={18} />
-                  </button>
-                </Link>
-
-                {/* <Link
-                  href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
-                >
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 
-                    rounded-xl bg-gradient-to-tr from-emerald-500 to-emerald-400 text-black 
-                    font-semibold shadow-[0_0_20px_rgba(16,185,129,0.25)] hover:shadow-[0_0_30px_rgba(16,185,129,0.35)]
-                    transition-all"
-                  >
-                    Claim Badge
-                    <ArrowUpRight size={18} />
-                  </motion.button>
-                </Link> */}
+                    >
+                      View Attendees
+                      <ExternalLink size={18} />
+                    </button>
+                  </Link>
+                )}
               </div>
             </div>
           </EventHoverCard>
