@@ -1,8 +1,5 @@
 
-<video width="100%" height="100%" controls>
-  <source src="./docs/POAPonSOL_Demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[![Watch Demo](./docs/thumbnail.png)](https://github.com/user-attachments/assets/fd6e79fa-1c42-4cbb-9a1e-9f0f411bb353)
 
 <a id="readme-top"></a>
 
