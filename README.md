@@ -1,3 +1,9 @@
+
+<video width="100%" height="100%" controls>
+  <source src="./docs/POAPonSOL_Demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 <a id="readme-top"></a>
 
 <!-- PROJECT LOGO -->
