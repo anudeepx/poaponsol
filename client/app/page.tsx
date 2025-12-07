@@ -1,47 +1,23 @@
-import About from "@/components/About";
-import { FeaturesSectionDemo } from "@/components/Features";
-import Footer from "@/components/Footer";
-import Hero from "@/components/Hero";
-import HowItWorks from "@/components/HowItWorks";
-import Navbar from "@/components/Navbar";
-import { ChevronDown  } from "lucide-react";
+import { Navbar } from "@/components/landing/Navbar";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { StatementSection } from "@/components/landing/StatementSection";
+import ProtocolModules from "@/components/landing/ProtocolModules";
+import HowItWorks from "@/components/landing/HowItWorks";
+import Footer from "@/components/landing/Footer";
+// import { FeaturedEventsSection } from "@/components/landing/FeaturedEventsSection";
 
-export default function Home() {
+const page = () => {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#0B0B0B] text-white">
+    <main className="relative bg-background text-foreground overflow-x-hidden noise-overlay">
       <Navbar />
-
-      <section className="flex flex-col items-center justify-center mt-0 md:mt-20 px-6 md:px-0">
-        <Hero />
-        <ChevronDown className="w-10 h-10 text-emerald-400 animate-bounce mt-10" />
-        <About />
-      </section>
-      <section
-        id="features"
-        className="flex flex-col lg:flex-row mt-20 mx-auto w-full max-w-7xl px-6"
-      >
-        <div className="w-full lg:w-1/2 flex items-center justify-center">
-          <div className="max-w-md">
-            <h2 className="text-3xl md:text-5xl font-semibold leading-tight mb-6">
-              Why{" "}
-              <span className="text-emerald-400 bg-linear-to-tr from-emerald-400 to-white bg-clip-text">
-                POAPonSOL
-              </span>
-              ?
-            </h2>
-            <p className="text-neutral-400 text-base md:text-lg">
-              POAPonSOL is a decentralized proof-of-attendance protocol built on
-              Solana enabling event organizers to create, distribute, and verify
-              digital attendance badges as NFTs.
-            </p>
-          </div>
-        </div>
-        <div className="w-full lg:w-1/2 flex items-center justify-center mt-10 lg:mt-0">
-          <FeaturesSectionDemo />
-        </div>
-      </section>
+      <HeroSection />
+      <StatementSection />
+      {/* <FeaturedEventsSection /> */}
+      <ProtocolModules />
       <HowItWorks />
       <Footer />
     </main>
   );
-}
+};
+
+export default page;
