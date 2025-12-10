@@ -78,10 +78,8 @@ export default function BadgeDetailsPage() {
         listClasses="hover:underline mx-2 font-bold"
         capitalizeLinks
       />
-
-      {/* QR Modal */}
       {showQR && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[999]">
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-999">
           <div className="bg-[#111] p-6 rounded-xl border border-neutral-700 text-center relative">
             <button
               className="absolute top-3 right-3 text-neutral-400 hover:text-white cursor-pointer"
@@ -93,7 +91,7 @@ export default function BadgeDetailsPage() {
             <h2 className="text-xl font-semibold mb-4">Share Badge QR</h2>
 
             <QRCodeCanvas
-              value={`https://poaponsol.vercel.app/badges/${mint}`}
+              value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/badges/${mint}`}
               size={300}
               bgColor="#111"
               fgColor="#00d386"
@@ -150,7 +148,6 @@ export default function BadgeDetailsPage() {
       )}
 
       <div className="max-w-5xl mx-auto space-y-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -158,7 +155,7 @@ export default function BadgeDetailsPage() {
         >
           <h1 className="text-4xl md:text-6xl font-semibold">
             Badge{" "}
-            <span className="bg-gradient-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
+            <span className="bg-linear-to-tr from-emerald-400 to-white bg-clip-text text-transparent">
               Details
             </span>
           </h1>
@@ -174,7 +171,7 @@ export default function BadgeDetailsPage() {
           className="grid grid-cols-1 md:grid-cols-2 gap-14"
         >
           <div className="flex flex-col items-center">
-            <div className="h-56 w-56 rounded-3xl bg-gradient-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.2)]">
+            <div className="h-56 w-56 rounded-3xl bg-linear-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.2)]">
               <Ticket size={90} className="text-emerald-400" />
             </div>
 

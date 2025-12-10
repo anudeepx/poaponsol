@@ -14,10 +14,10 @@ export const Navbar = () => {
       transition={{ delay: 0.5 }}
       className="fixed top-0 left-0 right-0 z-50 py-6"
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div className="container mx-auto p-6 flex items-center justify-between bg-black/1 backdrop-blur-xs rounded-lg">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full flex items-center justify-center">
-            <Image 
+            <Image
               src="/logo.svg"
               alt="PoaponSol Logo"
               width={40}
@@ -51,12 +51,12 @@ export const Navbar = () => {
         </div>
 
         {/* CTA */}
-            <div className="hidden md:block">
-              <WalletWrapper />
-            </div>
-            <div className="md:hidden h-10 md:w-auto md:h-auto">
-              <WalletWrapper />
-            </div>
+        <div className="hidden md:block">
+          <WalletWrapper />
+        </div>
+        <div className="md:hidden h-10 md:w-auto md:h-auto">
+          <WalletWrapper />
+        </div>
       </div>
     </motion.nav>
   );

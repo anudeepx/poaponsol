@@ -2,62 +2,15 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FolderPlus, Coins, Shield, X } from "lucide-react";
-
-const modules = [
-  {
-    id: 1,
-    icon: FolderPlus,
-    title: "Create Event Collection",
-    subtitle: "Initialize Protocol",
-    description:
-      "Deploy a certified collection using Metaplex standards. Define event parameters, supply limits, and metadata schemas.",
-    features: [
-      "Uses Metaplex Certified Collections",
-      "Customizable metadata schemas",
-      "Supply cap configuration",
-      "Automated royalty setup",
-    ],
-    code: "createCollection({ name, symbol, uri })",
-  },
-  {
-    id: 2,
-    icon: Coins,
-    title: "Mint Attendance NFTs",
-    subtitle: "Distribute Proof",
-    description:
-      "Generate unique attendance tokens for each participant. Batch minting supported with deterministic addressing.",
-    features: [
-      "Immutable Proofs of Attendance",
-      "Batch minting capabilities",
-      "QR code generation",
-      "Instant on-chain verification",
-    ],
-    code: "mintAttendanceNft({ collection, recipient })",
-  },
-  {
-    id: 3,
-    icon: Shield,
-    title: "Verify Participation",
-    subtitle: "Query Protocol",
-    description:
-      "Cryptographically verify attendance credentials. Query participation history and validate authenticity.",
-    features: [
-      "Solana-fast, near-zero fees",
-      "Cross-event verification",
-      "Attendance analytics",
-      "Export verification reports",
-    ],
-    code: "verifyAttendance({ wallet, collection })",
-  },
-];
+import { modules } from "@/app/data/data";
+import { X } from "lucide-react";
 
 export default function ProtocolModules() {
   const [selectedModule, setSelectedModule] = useState<number | null>(null);
 
   return (
     <section className="relative py-32 px-8 bg-[#0B0B0B] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1A] via-[#0B0B0B] to-[#0B0B0B]" />
+      <div className="absolute inset-0 bg-linear-to-b from-[#0B0B0B] via-[#0B0B0B] to-[#1A1A1A]" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -69,9 +22,7 @@ export default function ProtocolModules() {
           <div className="text-[#34D399] text-xs tracking-widest uppercase mb-4">
             Core Functions
           </div>
-          <h2 className="text-5xl md:text-7xl font-serif text-white">
-            The Protocol
-          </h2>
+          <h2 className="text-5xl md:text-7xl text-white">The Protocol</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -104,9 +55,7 @@ export default function ProtocolModules() {
                   {module.subtitle}
                 </div>
 
-                <h3 className="text-2xl font-serif text-white mb-4">
-                  {module.title}
-                </h3>
+                <h3 className="text-2xl text-white mb-4">{module.title}</h3>
 
                 <p className="text-[#4B4B4B] leading-relaxed mb-8">
                   {module.description}
@@ -122,22 +71,21 @@ export default function ProtocolModules() {
                 </div>
 
                 <motion.div
-                  className="absolute bottom-8 left-8 right-8 text-xs text-[#34D399] font-mono opacity-40 group-hover:opacity-100 transition-opacity"
+                  className="absolute bottom-8 left-8 right-8 text-xs text-[#34D399] opacity-40 group-hover:opacity-100 transition-opacity"
                   whileHover={{ y: -2 }}
                 >
                   {module.code}
                 </motion.div>
 
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#34D399] to-transparent" />
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#34D399] to-transparent" />
+                  <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-[#34D399] to-transparent" />
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-[#34D399] to-transparent" />
                 </div>
               </motion.div>
             </motion.div>
           ))}
         </div>
       </div>
-
       <AnimatePresence>
         {selectedModule && (
           <motion.div
@@ -180,7 +128,7 @@ export default function ProtocolModules() {
                       <div className="text-[#4B4B4B] text-xs tracking-widest uppercase">
                         {modules.find((m) => m.id === selectedModule)!.subtitle}
                       </div>
-                      <h3 className="text-3xl font-serif text-white">
+                      <h3 className="text-3xl text-white">
                         {modules.find((m) => m.id === selectedModule)!.title}
                       </h3>
                     </div>
@@ -201,7 +149,7 @@ export default function ProtocolModules() {
                           transition={{ delay: i * 0.1 }}
                           className="flex items-start gap-3 p-4 bg-[#0B0B0B] border border-[#2E2E2E] rounded-xl"
                         >
-                          <div className="w-2 h-2 bg-[#34D399] rounded-full mt-1.5 flex-shrink-0" />
+                          <div className="w-2 h-2 bg-[#34D399] rounded-full mt-1.5 shrink-0" />
                           <span className="text-white">{feature}</span>
                         </motion.div>
                       ))}
@@ -211,7 +159,7 @@ export default function ProtocolModules() {
                     <div className="text-[#34D399] text-xs tracking-widest uppercase mb-3">
                       Code Example
                     </div>
-                    <code className="text-[#34D399] font-mono text-sm">
+                    <code className="text-[#34D399] text-sm">
                       {modules.find((m) => m.id === selectedModule)!.code}
                     </code>
                   </div>

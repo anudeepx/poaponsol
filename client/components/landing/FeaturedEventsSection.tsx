@@ -2,33 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-
-const events = [
-  {
-    id: 1,
-    title: "Solana Breakpoint 2024",
-    year: "2024",
-    color: "from-emerald-500/20 to-emerald-900/20",
-  },
-  {
-    id: 2,
-    title: "DeFi Summit Amsterdam",
-    year: "2024",
-    color: "from-primary/20 to-emerald-800/20",
-  },
-  {
-    id: 3,
-    title: "Hacker House Tokyo",
-    year: "2024",
-    color: "from-emerald-400/20 to-primary/20",
-  },
-  {
-    id: 4,
-    title: "Web3 Conference Berlin",
-    year: "2023",
-    color: "from-emerald-600/20 to-emerald-400/20",
-  },
-];
+import { events } from "@/app/data/data";
 
 export const FeaturedEventsSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,7 +17,6 @@ export const FeaturedEventsSection = () => {
 
   return (
     <section ref={containerRef} className="relative py-32 overflow-hidden">
-      {/* Section header */}
       <div className="container mx-auto px-6 mb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -57,7 +30,6 @@ export const FeaturedEventsSection = () => {
         </motion.div>
       </div>
 
-      {/* Horizontal scroll gallery */}
       <motion.div style={{ x }} className="flex gap-8 pl-6">
         {events.map((event, index) => (
           <motion.div
@@ -69,15 +41,12 @@ export const FeaturedEventsSection = () => {
             onMouseLeave={() => setHoveredId(null)}
             className="relative flex-shrink-0 w-[400px] md:w-[500px] aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer group"
           >
-            {/* Background gradient */}
             <div
               className={`absolute inset-0 bg-gradient-to-br ${event.color}`}
             />
 
-            {/* Grid pattern */}
             <div className="absolute inset-0 protocol-grid opacity-20" />
 
-            {/* Hover glow effect */}
             <motion.div
               className="absolute inset-0 rounded-2xl"
               animate={{
@@ -89,7 +58,6 @@ export const FeaturedEventsSection = () => {
               transition={{ duration: 0.3 }}
             />
 
-            {/* Content */}
             <div className="absolute inset-0 p-8 flex flex-col justify-end">
               <motion.div
                 animate={{
@@ -109,7 +77,6 @@ export const FeaturedEventsSection = () => {
               </motion.div>
             </div>
 
-            {/* Emerald lens effect on hover */}
             {hoveredId === event.id && (
               <motion.div
                 initial={{ scale: 0, opacity: 0 }}
@@ -118,8 +85,6 @@ export const FeaturedEventsSection = () => {
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-primary/10 border border-primary/30 backdrop-blur-sm"
               />
             )}
-
-            {/* Border */}
             <div className="absolute inset-0 rounded-2xl border border-primary/20 group-hover:border-primary/40 transition-colors" />
           </motion.div>
         ))}

@@ -5,12 +5,10 @@ import { useParams } from "next/navigation";
 import { fetchEventByPda } from "@/lib/eventQueries";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
-// import Link from "next/link";
 import {
   Calendar,
   Clock,
   Users,
-  // ArrowUpRight,
   QrCode,
   ExternalLink,
   ArrowUpRight,
@@ -48,6 +46,7 @@ export default function EventDetailsPage() {
   useEffect(() => {
     if (connected) loadEvent();
     setIsOrganizerWallet(publicKey?.toBase58() === eventData?.data.organizer.toBase58());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, publicKey]);
 
   if (loading)
@@ -100,7 +99,7 @@ export default function EventDetailsPage() {
             <h2 className="text-xl font-semibold mb-4">Share Event QR</h2>
 
             <QRCodeCanvas
-              value={`https://poaponsol.vercel.app/events/${eventId}`}
+              value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/events/${eventId}`}
               size={300}
               bgColor="#111"
               fgColor="#00d386"

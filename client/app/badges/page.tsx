@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import * as anchor from "@coral-xyz/anchor";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLink, Calendar, Ticket } from "lucide-react";
 import { fetchUserBadges } from "@/lib/badgeQueries";
@@ -37,6 +36,7 @@ export default function BadgesPage() {
       return;
     }
     loadBadges();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   return (

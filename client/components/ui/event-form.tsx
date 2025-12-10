@@ -88,7 +88,7 @@ export default function EventForm({
             value={formData.name}
             onChange={handleChange}
             className="w-full bg-transparent border border-neutral-700 rounded-xl px-4 py-3 focus:outline-none focus:border-emerald-400 transition-all duration-200 placeholder:text-neutral-500"
-            placeholder="SolanaConf 2025"
+            placeholder="Solana BreakPoint 2025"
             required
           />
         </div>

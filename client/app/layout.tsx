@@ -8,7 +8,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "poaponsol",
-  description: "A Solana poap",
+  description: "A Solana POAP-style attendance protocol on Solana.",
 };
 
 export default function RootLayout({

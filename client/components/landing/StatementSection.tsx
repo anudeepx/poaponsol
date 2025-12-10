@@ -48,7 +48,6 @@ export const StatementSection = () => {
           </motion.span>
         </motion.h2>
 
-        {/* Decorative elements */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
