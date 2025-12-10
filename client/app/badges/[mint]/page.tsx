@@ -13,7 +13,7 @@ import {
   Hash,
   X,
 } from "lucide-react";
-import { fetchBadgeDetails } from "@/lib/badgeQueries";
+import { fetchBadgeDetails } from "@/lib/queries/badgeQueries";
 import { useParams } from "next/navigation";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import Breadcrumb from "@/components/BreadCrumb";

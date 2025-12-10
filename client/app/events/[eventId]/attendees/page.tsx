@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,7 +6,7 @@ import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ExternalLink, Clock, User } from "lucide-react";
 import * as anchor from "@coral-xyz/anchor";
-import { fetchAttendees } from "@/lib/attendeeQueries";
+import { fetchAttendees } from "@/lib/queries/attendeeQueries";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function AttendeesPage() {

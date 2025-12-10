@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Keypair, SystemProgram, PublicKey } from "@solana/web3.js";
-import { getAnchorClient } from "./anchorClient";
+import { getAnchorClient } from "./clients/anchorClient";
 import { getCollectionAuthorityPda, getClaimRecordPda } from "./pdas";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";
 
@@ -21,7 +21,7 @@ export const mintBadge = async (wallet: anchor.Wallet, eventPda: PublicKey, coll
             collectionAuthority: collectionAuthorityPda,
             coreProgram: MPL_CORE_PROGRAM_ID,
             systemProgram: SystemProgram.programId,
-        }as any)
+        } as any)
         .signers([badgeMint])
         .rpc();
 

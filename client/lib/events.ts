@@ -1,6 +1,6 @@
 import * as anchor from "@coral-xyz/anchor";
 import { SystemProgram, Keypair } from "@solana/web3.js";
-import { getAnchorClient } from "./anchorClient";
+import { getAnchorClient } from "./clients/anchorClient";
 import { getCollectionAuthorityPda, getEventPda, getProfilePda } from "./pdas";
 import { PublicKey } from "@solana/web3.js";
 import { MPL_CORE_PROGRAM_ID } from "@metaplex-foundation/mpl-core";

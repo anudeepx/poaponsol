@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { fetchEventByPda } from "@/lib/eventQueries";
+import { fetchEventByPda } from "@/lib/queries/eventQueries";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { motion } from "framer-motion";
 import {
@@ -21,23 +21,26 @@ import { X } from "lucide-react";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 
-
 export default function EventDetailsPage() {
   const params = useParams();
-  const eventId = Array.isArray(params?.eventId) ? params?.eventId[0] : params?.eventId;
+  const eventId = Array.isArray(params?.eventId)
+    ? params?.eventId[0]
+    : params?.eventId;
   const { wallet, connected, publicKey } = useWallet();
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showQR, setShowQR] = useState(false);
   const [isOrganizerWallet, setIsOrganizerWallet] = useState<boolean>(false);
 
-
   const loadEvent = async () => {
     if (!wallet?.adapter || !eventId) return;
     setLoading(true);
 
     const pubkey = new anchor.web3.PublicKey(eventId);
-    const result = await fetchEventByPda(wallet.adapter as unknown as Wallet, pubkey);
+    const result = await fetchEventByPda(
+      wallet.adapter as unknown as Wallet,
+      pubkey
+    );
 
     setEventData(result);
     setLoading(false);
@@ -45,8 +48,10 @@ export default function EventDetailsPage() {
 
   useEffect(() => {
     if (connected) loadEvent();
-    setIsOrganizerWallet(publicKey?.toBase58() === eventData?.data.organizer.toBase58());
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIsOrganizerWallet(
+      publicKey?.toBase58() === eventData?.data.organizer.toBase58()
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connected, publicKey]);
 
   if (loading)
@@ -65,7 +70,9 @@ export default function EventDetailsPage() {
 
   const e = eventData.data;
 
-  const readableStart = new Date(Number(e.startTimestamp) * 1000).toDateString();
+  const readableStart = new Date(
+    Number(e.startTimestamp) * 1000
+  ).toDateString();
   const readableEnd = new Date(Number(e.endTimestamp) * 1000).toDateString();
 
   const now = Math.floor(Date.now() / 1000);

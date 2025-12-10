@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLink, Calendar, Ticket } from "lucide-react";
-import { fetchUserBadges } from "@/lib/badgeQueries";
+import { fetchUserBadges } from "@/lib/queries/badgeQueries";
 import Link from "next/link";
 import Breadcrumb from "@/components/BreadCrumb";
 import { toast } from "sonner";
