@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { modules } from "@/app/data/data";
+import { modules } from "@/data/data";
 import { X } from "lucide-react";
 
 export default function ProtocolModules() {

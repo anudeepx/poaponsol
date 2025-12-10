@@ -71,10 +71,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1) brightness(1.5);
 }
 
-/* Custom Styles */
-
-/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap'); */
-
 @layer base {
   :root {
     /* Emerald & Carbon Palette */

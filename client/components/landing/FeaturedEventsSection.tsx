@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState } from "react";
-import { events } from "@/app/data/data";
+import { events } from "@/data/data";
 
 export const FeaturedEventsSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
