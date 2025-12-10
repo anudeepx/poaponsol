@@ -1,29 +1,28 @@
-import { prisma } from "@/lib/clients/prismaClient";
-import { NextResponse } from "next/server";
+// import { prisma } from "@/lib/prisma";
+// import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
-    try {
-        const body = await req.json();
+// export async function POST(req: Request) {
+//     try {
+//         const body = await req.json();
 
-        const event = await prisma.event.create({
-            data: {
-                eventPda: body.eventPda,
-                name: body.name,
-                organizer: body.organizer,
-                collectionMint: body.collectionMint,
-                uri: body.uri,
-                startTimestamp: BigInt(body.startTimestamp),
-                endTimestamp: BigInt(body.endTimestamp),
-                maxClaims: body.maxClaims,
-                isActive: body.isActive,
-                bump: body.bump,
-                claimRecords: [],
-            },
-        });
+//         const event = await prisma.claimRecord.create({
+//             data: {
+//                 claimPda: body.claimPda,
+//                 wallet: body.wallet,
+//                 eventPda: body.eventPda,
+//                 mint: body.mint,
+//                 collectionMint: body.collectionMint,
+//                 claimedAt: BigInt(body.claimedAt),
+//                 eventName: body.eventName,
+//                 eventUri: body.eventUri,
+//             },
+//         });
 
-        return NextResponse.json(event, { status: 201 });
-    } catch (err) {
-        console.error(err);
-        return NextResponse.json({ error: "Failed to create event" }, { status: 500 });
-    }
-}
+//         return NextResponse.json(event, { status: 201 });
+//     } catch (err) {
+//         console.error(err);
+//         return NextResponse.json({ error: "Failed to create claim record" }, { status: 500 });
+//     }
+// }
+
+export {};

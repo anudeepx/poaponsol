@@ -8,6 +8,8 @@ import { ExternalLink, Clock, User } from "lucide-react";
 import * as anchor from "@coral-xyz/anchor";
 import { fetchAttendees } from "@/lib/queries/attendeeQueries";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
+import { EventHoverCard } from "@/components/EventHoverCard";
 
 export default function AttendeesPage() {
   const params = useParams();
@@ -67,60 +69,59 @@ export default function AttendeesPage() {
             No attendees yet.
           </div>
         )}
-
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           {attendees.map((a, idx) => (
-            <motion.div
-              key={a.wallet}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.05 }}
-              className="relative bg-black/40 border border-emerald-500/20 
-                rounded-2xl p-6 backdrop-blur-xl shadow-[0_0_25px_rgba(16,185,129,0.15)]
-                hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] transition-all duration-300 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
+            <CornerHoverCard key={a.wallet}>
+              <EventHoverCard
+                key={a.wallet}
+                // initial={{ opacity: 0, y: 15 }}
+                // animate={{ opacity: 1, y: 0 }}
+                // transition={{ delay: idx * 0.05 }}
+                // className="relative bg-black/40 border border-emerald-500/20 
+                // rounded-2xl p-6 backdrop-blur-xl shadow-[0_0_25px_rgba(16,185,129,0.15)]
+                // hover:shadow-[0_0_35px_rgba(16,185,129,0.25)] transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_center,rgba(16,185,129,0.08),transparent_70%)] pointer-events-none" />
 
-              <div className="relative z-10 space-y-5">
-                <div className="flex justify-center">
-                  <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/40 to-emerald-300/10 flex items-center justify-center border border-emerald-500/20">
-                    <User size={28} className="text-emerald-400" />
+                <div className="relative z-10 space-y-5">
+                  <div className="flex justify-center">
+                    <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/40 to-emerald-300/10 flex items-center justify-center border border-emerald-500/20">
+                      <User size={28} className="text-emerald-400" />
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-center">
-                  <p className="text-neutral-300 text-sm">Wallet Address</p>
-                  <p className="font-mono text-emerald-300 text-sm break-all mt-1">
-                    {a.wallet}
-                  </p>
-                </div>
+                  <div className="text-center">
+                    <p className="text-neutral-300 text-sm">Wallet Address</p>
+                    <p className="font-mono text-emerald-300 text-sm break-all mt-1">
+                      {a.wallet}
+                    </p>
+                  </div>
 
-                <div className="text-center">
-                  <p className="text-neutral-300 text-sm">Badge Mint</p>
-                  <p className="font-mono text-neutral-400 text-xs break-all mt-1">
-                    {a.mint}
-                  </p>
-                </div>
+                  <div className="text-center">
+                    <p className="text-neutral-300 text-sm">Badge Mint</p>
+                    <p className="font-mono text-neutral-400 text-xs break-all mt-1">
+                      {a.mint}
+                    </p>
+                  </div>
 
-                <div className="flex items-center justify-center gap-2 text-neutral-300 text-sm">
-                  <Clock size={16} className="text-emerald-300" />
-                  <span>
-                    {new Date(a.claimedAt * 1000).toLocaleString()}
-                  </span>
-                </div>
+                  <div className="flex items-center justify-center gap-2 text-neutral-300 text-sm">
+                    <Clock size={16} className="text-emerald-300" />
+                    <span>{new Date(a.claimedAt * 1000).toLocaleString()}</span>
+                  </div>
 
-                <a
-                  href={`https://explorer.solana.com/address/${a.mint}?cluster=devnet`}
-                  target="_blank"
-                  className="flex items-center gap-2 justify-center mt-3 text-emerald-400 hover:text-emerald-300 text-sm"
-                >
-                  View Badge <ExternalLink size={14} />
-                </a>
-              </div>
-            </motion.div>
+                  <a
+                    href={`https://explorer.solana.com/address/${a.mint}?cluster=devnet`}
+                    target="_blank"
+                    className="flex items-center gap-2 justify-center mt-3 text-emerald-400 hover:text-emerald-300 text-sm"
+                  >
+                    View Badge <ExternalLink size={14} />
+                  </a>
+                </div>
+              </EventHoverCard>
+            </CornerHoverCard>
           ))}
         </motion.div>
       </div>

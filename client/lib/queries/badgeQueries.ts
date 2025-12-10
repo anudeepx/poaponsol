@@ -1,4 +1,6 @@
-import { getAnchorClient } from "./anchorClient";
+"use client";
+
+import { getAnchorClient } from "../clients/anchorClient";
 import * as anchor from "@coral-xyz/anchor";
 import { type PublicKey } from '@solana/web3.js';
 import { Wallet } from "@solana/wallet-adapter-react";

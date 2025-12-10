@@ -229,7 +229,7 @@ export default function EventDetailsPage() {
                   <br />
                   {e.organizer.toBase58()}
                 </div>
-                {!isOrganizerWallet && (
+                {isOrganizerWallet && (
                   <Link
                     href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
                   >
@@ -280,7 +280,7 @@ export default function EventDetailsPage() {
                   <QrCode size={16} />
                   Share Event QR
                 </button>
-                {isOrganizerWallet && (
+                {!isOrganizerWallet && (
                   <Link href={`/events/${eventId}/attendees`}>
                     <button
                       className="w-full mt-4 flex items-center justify-center gap-3 px-5 py-3 

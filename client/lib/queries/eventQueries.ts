@@ -1,3 +1,5 @@
+"use client";
+
 import { type PublicKey } from '@solana/web3.js';
 import { getAnchorClient } from "../clients/anchorClient";
 import * as anchor from "@coral-xyz/anchor";
