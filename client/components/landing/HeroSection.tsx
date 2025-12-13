@@ -3,9 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
-import Form from "../Form";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { toast } from "sonner";
+import Link from "next/link";
 
 export const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,9 +11,6 @@ export const HeroSection = () => {
     target: containerRef,
     offset: ["start start", "end start"],
   });
-  const { connected, wallet } = useWallet();
-  const [loading, setLoading] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
   const [particles, setParticles] = useState<
     { x: number; y: number; duration: number; delay: number }[]
   >([]);
@@ -35,13 +30,6 @@ export const HeroSection = () => {
     setParticles(generated);
   }, []);
 
-
-  const handleFormOpen = async () => {
-    if (!connected || !wallet?.adapter)
-      return toast.error("Connect wallet first!");
-    setFormOpen(true);
-  };
-
   const maskScale = useTransform(scrollYProgress, [0, 0.5], [1, 15]);
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
@@ -52,7 +40,6 @@ export const HeroSection = () => {
       className="relative min-h-[200vh] overflow-hidden"
     >
       <div className="abosolute z-99">
-        <Form open={formOpen} onClose={() => setFormOpen(false)} />
       </div>
       <div className="fixed inset-0 bg-linear-to-b from-background via-background to-graphite" />
 
@@ -112,9 +99,9 @@ export const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-6 text-lg md:text-xl text-muted-foreground max-w-md text-center"
+          className="mt-6 text-lg md:text-lg text-muted-foreground max-w-md text-center"
         >
-          The On-Chain Attendance Protocol
+          Your on-chain proof of attendance, the Solana way.
         </motion.p>
 
         <motion.div
@@ -124,13 +111,13 @@ export const HeroSection = () => {
           className="mt-12"
         >
           <motion.button
-            className="flex items-center gap-2 text-black bg-emerald-400 h-14 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-full px-2 md:px-5 py-3 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
+            className="flex items-center gap-2 text-black bg-emerald-400 h-14 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-lg px-2 md:px-5 py-3 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            onClick={handleFormOpen}
-            disabled={loading}
           >
-            {loading ? "Processing..." : "Create Event"}
+            <Link prefetch={true} href="/events/create">
+              Create Event
+            </Link>
             <motion.div
               initial={{ x: 0 }}
               animate={{ x: [0, 5, 0] }}

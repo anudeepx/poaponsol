@@ -64,13 +64,14 @@ pub struct MintBadge<'info> {
 
 impl<'info> MintBadge<'info> {
     pub fn handler(&mut self) -> Result<()> {
+        require!(self.event.max_claims == 0, PoapError::EventMaxClaimsReached);
         let claimer = &self.claimer;
         let badge_mint = &self.badge_mint;
         let collection = &self.collection;
         let collection_authority = &self.collection_authority;
         let core_program = &self.core_program;
         let record = &mut self.claim_record;
-        let event = &self.event;
+        let event = &mut self.event;
 
         let signer_seeds: &[&[&[u8]]] = &[&[
             COLLECTION_AUTHORITY_SEED,
@@ -129,6 +130,8 @@ impl<'info> MintBadge<'info> {
             ])
             .external_plugin_adapters(vec![])
             .invoke_signed(signer_seeds)?;
+        
+        event.max_claims = event.max_claims.checked_sub(1).ok_or(PoapError::InvalidArgument)?;
 
         record.set_inner(ClaimRecord {
             wallet: claimer.key(),

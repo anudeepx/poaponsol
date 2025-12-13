@@ -18,4 +18,6 @@ pub enum PoapError {
     EventAlreadyClosed,
     #[msg("Not authorized to perform this action")]
     InvalidArgument,
+    #[msg("Event has reached the maximum number of claims")]
+    EventMaxClaimsReached
 }

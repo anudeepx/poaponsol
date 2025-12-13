@@ -1,43 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Github, Twitter, ArrowUpRight } from "lucide-react";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { toast } from "sonner";
-import ClaimForm from "../ClaimForm";
-import Form from "../Form";
+import Link from "next/link";
 
 export default function Footer() {
-  const [time, setTime] = useState("");
-  const { connected, wallet } = useWallet();
-  const [loading, setLoading] = useState(false);
-  const [formOpen, setFormOpen] = useState(false);
-  const [claimOpen, setClaimOpen] = useState(false);
-
-  const handleFormOpen = async () => {
-    if (!connected || !wallet?.adapter)
-      return toast.error("Connect wallet first!");
-    setFormOpen(true);
-  };
-
-  const handleClaimOpen = async () => {
-    if (!connected || !wallet?.adapter)
-      return toast.error("Connect wallet first!");
-    setClaimOpen(true);
-  };
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const utcTime = now.toUTCString().split(" ")[4];
-      setTime(utcTime);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   const socialLinks = [
     {
@@ -48,17 +15,11 @@ export default function Footer() {
       icon: Twitter,
       url: "https://x.com/poaponsolana",
     },
-    // {
-    //   icon: Mail,
-    //   url: "mailto:anudeepavula009@gmail.com",
-    // },
   ];
 
   return (
     <footer className="relative bg-[#0B0B0B] overflow-hidden">
       <div className="abosolute z-99">
-        <Form open={formOpen} onClose={() => setFormOpen(false)} />
-        <ClaimForm open={claimOpen} onClose={() => setClaimOpen(false)} />
       </div>
       <div className="absolute inset-0 bg-linear-to-b from-[#1A1A1A] to-[#0B0B0B]" />
 
@@ -82,13 +43,13 @@ export default function Footer() {
 
             <div className="flex gap-6 justify-center">
               <motion.button
-                className="flex items-center gap-2 text-black bg-emerald-400 h-14 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-full px-2 md:px-5 py-3 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
+                className="flex items-center gap-2 text-black bg-emerald-400 h-14 md:-auto border-2 hover:bg-white hover:text-black border-emerald-400 rounded-lg px-2 md:px-5 py-3 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/30 group hover:cursor-pointer"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleFormOpen}
-                disabled={loading}
               >
-                {loading ? "Processing..." : "Create Event"}
+                <Link prefetch={true} href="/events/create">
+                  Create Event
+                </Link>
                 <motion.div
                   initial={{ x: 0 }}
                   animate={{ x: [0, 5, 0] }}
@@ -104,13 +65,13 @@ export default function Footer() {
               </motion.button>
 
               <motion.button
-                className="flex items-center gap-2 border-2 h-14 bg-white text-black hover:bg-emerald-400 hover:text-white border-emerald-400 rounded-full px-2 md:px-5 py-2 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/20 group hover:cursor-pointer"
+                className="flex items-center gap-2 border-2 h-14 bg-white text-black hover:bg-emerald-400 hover:text-white border-emerald-400 rounded-lg px-2 md:px-5 py-2 text-lg font-subtitle transition-all duration-300 hover:shadow-lg hover:shadow-emerald-400/20 group hover:cursor-pointer"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleClaimOpen}
-                disabled={loading}
               >
-                {loading ? "Processing..." : "Claim Badge"}
+                <Link prefetch={true} href="/badges/claim">
+                  Claim Badge
+                </Link>
               </motion.button>
             </div>
           </div>
@@ -125,6 +86,7 @@ export default function Footer() {
               <motion.a
                 key={i}
                 href={url}
+                target="_blank"
                 whileHover={{ scale: 1.1, y: -2 }}
                 whileTap={{ scale: 0.95 }}
                 className="w-10 h-10 bg-[#1A1A1A] border border-[#2E2E2E] hover:border-[#34D399] rounded-xl flex items-center justify-center transition-colors group"

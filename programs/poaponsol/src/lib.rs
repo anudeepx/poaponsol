@@ -12,7 +12,7 @@ pub use errors::*;
 pub use state::*;
 pub use events::*;
 
-declare_id!("DzqHpVGTsTumRwUBSgv16PKStMA7xK3XhXwTNB921B6r");
+declare_id!("GpAhN67E8jyi65mkLKRwfVABPSTGLP34SGYoYh9sgHPS");
 
 #[program]
 pub mod poaponsol {
