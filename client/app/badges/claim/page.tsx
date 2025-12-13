@@ -1,11 +1,12 @@
-import { memo } from 'react';
+"use client";
+
+import ClaimBadgeModal from '@/components/claim-form/ClaimBadgeModal';
 
 const Page = () => {
+
   return (
-    <div>
-      <h2>Page</h2>
-    </div>
+    <ClaimBadgeModal open={true} onClose={() => {}} />
   );
 };
 
-export default memo(Page);
+export default Page;
