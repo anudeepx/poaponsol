@@ -89,7 +89,7 @@ export default function AttendeesPage() {
                 <div className="relative z-10 space-y-5">
                   <div className="flex justify-center">
                     <div className="h-16 w-16 rounded-full bg-gradient-to-br from-emerald-500/40 to-emerald-300/10 flex items-center justify-center border border-emerald-500/20">
-                      <User size={28} className="text-emerald-400" />
+                      <User size={28} className="text-[#6cac95]" />
                     </div>
                   </div>
 
@@ -115,7 +115,7 @@ export default function AttendeesPage() {
                   <a
                     href={`https://explorer.solana.com/address/${a.mint}?cluster=devnet`}
                     target="_blank"
-                    className="flex items-center gap-2 justify-center mt-3 text-emerald-400 hover:text-emerald-300 text-sm"
+                    className="flex items-center gap-2 justify-center mt-3 text-[#6cac95] hover:text-emerald-300 text-sm"
                   >
                     View Badge <ExternalLink size={14} />
                   </a>

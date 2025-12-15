@@ -73,7 +73,7 @@ export default function BadgeDetailsPage() {
       <Breadcrumb
         homeElement={"Home"}
         separator={<span> | </span>}
-        activeClasses="text-emerald-400"
+        activeClasses="text-[#6cac95]"
         containerClasses="flex py-2 bg-[#0B0B0B] md:mb-12"
         listClasses="hover:underline mx-2 font-bold"
         capitalizeLinks
@@ -172,7 +172,7 @@ export default function BadgeDetailsPage() {
         >
           <div className="flex flex-col items-center">
             <div className="h-56 w-56 rounded-3xl bg-linear-to-br from-emerald-600/20 to-emerald-400/10 border border-emerald-500/20 flex items-center justify-center shadow-[0_0_25px_rgba(16,185,129,0.2)]">
-              <Ticket size={90} className="text-emerald-400" />
+              <Ticket size={90} className="text-[#6cac95]" />
             </div>
 
             <p className="text-neutral-400 text-sm mt-3 break-all">
@@ -225,7 +225,7 @@ export default function BadgeDetailsPage() {
                 <a
                   href={eventUri}
                   target="_blank"
-                  className="text-emerald-400 hover:text-emerald-300 text-sm"
+                  className="text-[#6cac95] hover:text-emerald-300 text-sm"
                 >
                   View Metadata
                 </a>
@@ -234,7 +234,7 @@ export default function BadgeDetailsPage() {
               <a
                 href={`https://explorer.solana.com/address/${badgeMint}?cluster=devnet`}
                 target="_blank"
-                className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm pt-2"
+                className="flex items-center gap-2 text-[#6cac95] hover:text-emerald-300 text-sm pt-2"
               >
                 View NFT on Explorer <ExternalLink size={14} />
               </a>

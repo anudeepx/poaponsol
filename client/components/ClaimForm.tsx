@@ -99,13 +99,13 @@ const ClaimForm = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
 
             {/* <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-neutral-400 hover:text-emerald-400 transition-colors duration-200"
+              className="absolute top-4 right-4 text-neutral-400 hover:text-[#6cac95] transition-colors duration-200"
             >
               <X size={22} />
             </button> */}
 
             <div className="relative z-10 space-y-6">
-              <h2 className="text-3xl font-semibold text-emerald-400 text-center">
+              <h2 className="text-3xl font-semibold text-[#6cac95] text-center">
                 Claim Your Badge
               </h2>
 

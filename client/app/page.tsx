@@ -1,15 +1,17 @@
-import { Navbar } from "@/components/landing/Navbar";
-import { HeroSection } from "@/components/landing/HeroSection";
-import Footer from "@/components/landing/Footer";
+import BackgroundEffects from "@/components/BackgroundEffects";
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import ScrollIndicator from "@/components/ScrollIndicator";
 
-const page = () => {
+const Index = () => {
   return (
-    <main className="relative bg-background text-foreground overflow-x-hidden noise-overlay">
+    <main className="relative min-h-screen overflow-hidden">
+      <BackgroundEffects />
       <Navbar />
-      <HeroSection />
-      <Footer />
+      <Hero />
+      <ScrollIndicator />
     </main>
   );
 };
 
-export default page;
+export default Index;

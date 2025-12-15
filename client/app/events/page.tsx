@@ -15,32 +15,50 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { EventHoverCard } from "@/components/EventHoverCard";
 import { CornerHoverCard } from "@/components/ui/CornerHoverCard";
+import { useRef } from "react";
 
 export default function EventsPage() {
-  const { publicKey, connected, wallet } = useWallet();
+  const { publicKey, connected, wallet, connecting } = useWallet();
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const hasCheckedWallet = useRef(false);
+  const [mounted, setMounted] = useState(false);
+  
 
   const loadEvents = async () => {
-    setLoading(true);
-    const list = await fetchEventsByOrganizer(
-      wallet!.adapter as any,
-      publicKey!
-    );
-    setEvents(list || []);
-    setLoading(false);
-  };
+  if (!wallet?.adapter || !publicKey) return;
+
+  setLoading(true);
+  const list = await fetchEventsByOrganizer(
+    wallet.adapter as any,
+    publicKey
+  );
+  setEvents(list || []);
+  setLoading(false);
+};
 
   useEffect(() => {
-    if (!publicKey) {
-      toast.error("Please connect your wallet to view your badges.");
-      setLoading(false);
-      router.push("/");
-      return;
-    }
-    loadEvents();
-  }, [connected]);
+  setMounted(true);
+}, []);
+
+  useEffect(() => {
+  if (!mounted) return;
+
+  if (connecting) return;
+
+  if (hasCheckedWallet.current) return;
+
+  hasCheckedWallet.current = true;
+
+  if (!connected || !publicKey || !wallet?.adapter) {
+    toast.error("Please connect your wallet to view your events.");
+    router.push("/");
+    return;
+  }
+
+  loadEvents();
+}, [mounted, connecting, connected, publicKey, wallet]);
 
   return (
     <>
@@ -49,7 +67,7 @@ export default function EventsPage() {
           <Breadcrumb
             homeElement={"Home"}
             separator={<span> | </span>}
-            activeClasses="text-emerald-400"
+            activeClasses="text-[#6cac95]"
             containerClasses="flex py-2 bg-[#0B0B0B] mb-10 md:mb-2"
             listClasses="hover:underline mx-2 font-bold"
             capitalizeLinks
@@ -83,7 +101,7 @@ export default function EventsPage() {
               <br />
               <Link
                 href="/"
-                className="mt-4 inline-block text-emerald-400 hover:text-emerald-300"
+                className="mt-4 inline-block text-[#6cac95] hover:text-emerald-300"
               >
                 Create your first event →
               </Link>
@@ -129,7 +147,7 @@ export default function EventsPage() {
                         <span
                           className={`text-xs px-3 py-1 rounded-full ${
                             !(e.endTimestamp < Date.now() / 1000)
-                              ? "bg-emerald-500/20 text-emerald-400"
+                              ? "bg-emerald-500/20 text-[#6cac95]"
                               : "bg-neutral-700 text-neutral-300"
                           }`}
                         >

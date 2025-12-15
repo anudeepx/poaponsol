@@ -88,7 +88,7 @@ export default function EventDetailsPage() {
       <Breadcrumb
         homeElement={"Home"}
         separator={<span> | </span>}
-        activeClasses="text-emerald-400"
+        activeClasses="text-[#6cac95]"
         containerClasses="flex py-2 bg-[#0B0B0B] md:mb-12"
         listClasses="hover:underline mx-2 font-bold"
         capitalizeLinks
@@ -182,7 +182,7 @@ export default function EventDetailsPage() {
           <span
             className={`px-5 py-2 rounded-full text-sm font-semibold ${
               status === "Active"
-                ? "bg-emerald-500/20 text-emerald-400"
+                ? "bg-emerald-500/20 text-[#6cac95]"
                 : status === "Upcoming"
                 ? "bg-blue-500/20 text-blue-300"
                 : "bg-neutral-700 text-neutral-400"
@@ -210,17 +210,17 @@ export default function EventDetailsPage() {
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
-                  <Calendar className="text-emerald-400" size={20} />
+                  <Calendar className="text-[#6cac95]" size={20} />
                   <span>From: {readableStart}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
-                  <Clock className="text-emerald-400" size={20} />
+                  <Clock className="text-[#6cac95]" size={20} />
                   <span>To: {readableEnd}</span>
                 </div>
 
                 <div className="flex items-center gap-3 text-neutral-300">
-                  <Users className="text-emerald-400" size={20} />
+                  <Users className="text-[#6cac95]" size={20} />
                   <span>Max Claims: {e.maxClaims}</span>
                 </div>
 

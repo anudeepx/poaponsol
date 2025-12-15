@@ -20,7 +20,7 @@ export default function EventSummary({
       transition={{ delay: 0.3, duration: 0.6 }}
       className="mt-10 backdrop-blur-md bg-black/40 border border-emerald-500/20 rounded-2xl shadow-[0_0_40px_rgba(16,185,129,0.1)] p-8 w-full max-w-2xl mx-auto"
     >
-      <h3 className="text-2xl font-semibold text-emerald-400 mb-4">
+      <h3 className="text-2xl font-semibold text-[#6cac95] mb-4">
         Event Summary
       </h3>
 
@@ -34,7 +34,7 @@ export default function EventSummary({
           <p className="text-sm text-neutral-400">Event Status</p>
           <p
             className={`font-semibold ${
-              eventActive ? "text-emerald-400" : "text-red-400"
+              eventActive ? "text-[#6cac95]" : "text-red-400"
             }`}
           >
             {eventActive ? "Active" : "Closed"}

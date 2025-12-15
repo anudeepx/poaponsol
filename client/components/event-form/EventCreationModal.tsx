@@ -235,7 +235,7 @@ const EventCreationModal = ({ isOpen, onClose }: EventCreationModalProps) => {
                   disabled={!isStepValid()}
                   className={`flex items-center gap-2 px-8 py-3 rounded-xl font-semibold transition ${
                     isStepValid()
-                      ? "bg-emerald-400 text-primary-foreground btn-glow"
+                      ? "bg-[#6cac95] text-primary-foreground btn-glow"
                       : "bg-muted text-muted-foreground cursor-not-allowed"
                   }`}
                 >

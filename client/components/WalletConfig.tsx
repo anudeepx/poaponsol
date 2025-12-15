@@ -11,11 +11,13 @@ const WalletConfig = () => {
   return (
     <div>
       {connected ? (
-        <WalletButton className="font-semibold px-6 py-2 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl" />
+        <WalletButton className="font-semibold font-tiny5 px-6 py-2 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl" />
       ) : (
-        <WalletButton className="font-semibold px-6 py-2 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl">
+        <WalletButton className="font-semibold font-tiny5 px-6 py-2 shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl">
           <Wallet className="h-4 w-4 mr-2" />
-          Connect Wallet
+          <span className="font-tiny5">
+            Connect Wallet
+          </span>
         </WalletButton>
       )}
     </div>

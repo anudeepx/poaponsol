@@ -53,14 +53,18 @@ html {
 .wallet-adapter-dropdown-list,
 .wallet-adapter-modal-wrapper,
 .wallet-adapter-button {
-  background-color: oklch(76.5% 0.177 163.223) !important;
+  background-color: oklch(69.367% 0.07018 171.539) !important;
+}
+
+body {
+  font-family: var(--font-tiny5), sans-serif;
 }
 
 .wallet-adapter-dropdown-list-item:hover,
 .wallet-adapter-modal-button-close,
 .wallet-adapter-button:hover {
   color: black !important;
-  background-color: oklch(76.5% 0.177 163.223) !important;
+  background-color: oklch(67.143% 0.06981 172.434) !important;
 }
 
 .wallet-adapter-modal-button-close svg {
@@ -69,6 +73,18 @@ html {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1) brightness(1.5);
+}
+
+.font-space-grotesk {
+  font-family: var(--font-space);
+}
+
+.font-space {
+  font-family: var(--font-space);
+}
+
+.font-tiny5 {
+  font-family: var(--font-tiny5), sans-serif;
 }
 
 @layer base {
