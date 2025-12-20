@@ -91,7 +91,7 @@ export default function BadgeDetailsPage() {
             <h2 className="text-xl font-semibold mb-4">Share Badge QR</h2>
 
             <QRCodeCanvas
-              value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/badges/${mint}`}
+              value={`${process.env.NEXT_PUBLIC_CLIENT_URL}/badges/claim/${mint}`}
               size={300}
               bgColor="#111"
               fgColor="#00d386"

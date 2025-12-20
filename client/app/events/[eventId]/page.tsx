@@ -94,10 +94,25 @@ export default function EventDetailsPage() {
         capitalizeLinks
       />
       {showQR && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-[999]">
-          <div className="bg-[#111] p-6 rounded-xl border border-neutral-700 text-center relative">
+        <div
+          className="
+            fixed inset-0 z-[999]
+            flex items-center justify-center
+            bg-black/70
+            transition-opacity duration-500 ease-out
+            opacity-100
+          "
+        >
+          <div
+            className="
+              bg-[#111] p-6 rounded-xl border border-neutral-700
+              text-center relative
+              transform transition-all duration-500 ease-out
+              scale-100 translate-y-0
+            "
+          >
             <button
-              className="absolute top-3 right-3 text-neutral-400 hover:text-white hover:cursor-pointer"
+              className="absolute top-3 right-3 text-neutral-400 hover:text-white"
               onClick={() => setShowQR(false)}
             >
               <X size={30} />
@@ -110,12 +125,11 @@ export default function EventDetailsPage() {
               size={300}
               bgColor="#111"
               fgColor="#00d386"
-              includeMargin={true}
+              includeMargin
             />
 
             <div className="mt-5 flex gap-3 justify-center">
-              <button
-                onClick={async () => {
+              <button onClick={async () => {
                   const canvas = document.querySelector("canvas")!;
                   const pngUrl = canvas.toDataURL("image/png");
 
@@ -131,20 +145,16 @@ export default function EventDetailsPage() {
 
                     navigator.share({
                       title: "Event Link",
-                      text: "Scan this QR to view the event",
+                      text: "Scan to view the event",
                       files: [file],
                     });
                   } else {
                     alert("Sharing not supported on this device.");
                   }
-                }}
-                className="px-4 py-2 rounded-lg bg-emerald-500 text-black font-semibold hover:cursor-pointer transition-all"
-              >
+                }} className="px-4 py-2 rounded-lg bg-emerald-500 text-black font-semibold transition-all">
                 Share
               </button>
-
-              <button
-                onClick={() => {
+              <button onClick={() => {
                   const canvas = document.querySelector("canvas")!;
                   const pngUrl = canvas.toDataURL("image/png");
 
@@ -152,9 +162,7 @@ export default function EventDetailsPage() {
                   link.href = pngUrl;
                   link.download = "event-qr.png";
                   link.click();
-                }}
-                className="px-4 py-2 rounded-lg bg-neutral-700 hover:bg-neutral-600 font-semibold hover:cursor-pointer transition-all"
-              >
+                }} className="px-4 py-2 rounded-lg bg-neutral-700 hover:bg-neutral-600 font-semibold transition-all cursor-pointer">
                 Download
               </button>
             </div>
@@ -229,9 +237,8 @@ export default function EventDetailsPage() {
                   <br />
                   {e.organizer.toBase58()}
                 </div>
-                {isOrganizerWallet && (
                   <Link
-                    href={`/badges/${eventId}?collection=${e.collectionMint.toBase58()}`}
+                    href={`/badges/claim/${eventId}?collection=${e.collectionMint.toBase58()}`}
                   >
                     <motion.button
                       whileHover={{ scale: 1.03 }}
@@ -245,7 +252,6 @@ export default function EventDetailsPage() {
                       <ArrowUpRight size={18} />
                     </motion.button>
                   </Link>
-                )}
               </div>
 
               <div className="space-y-6">
